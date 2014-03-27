@@ -4,15 +4,19 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
+import javax.xml.bind.JAXBException;
 
 import com.mxgraph.analysis.StructuralException;
 import com.mxgraph.analysis.mxGraphProperties.GraphType;
@@ -21,6 +25,7 @@ import com.mxgraph.analysis.mxGraphProperties;
 import com.mxgraph.analysis.mxGraphStructure;
 import com.mxgraph.analysis.mxTraversal;
 import com.mxgraph.costfunction.mxCostFunction;
+import com.mxgraph.examples.language.SystemLang;
 import com.mxgraph.examples.swing.editor.EditorActions.AlignCellsAction;
 import com.mxgraph.examples.swing.editor.EditorActions.AutosizeAction;
 import com.mxgraph.examples.swing.editor.EditorActions.BackgroundAction;
@@ -73,6 +78,12 @@ public class EditorMenuBar extends JMenuBar
 	 * 
 	 */
 	private static final long serialVersionUID = 4060203894740766714L;
+	
+	/************Changed by bdlions***************/
+	private JMenu fileMenu; 
+	private JMenu editMenu;
+	private JMenu viewMenu;
+	/************Changed by bdlions***************/
 
 	public enum AnalyzeType
 	{
@@ -88,57 +99,58 @@ public class EditorMenuBar extends JMenuBar
 		JMenu menu = null;
 		JMenu submenu = null;
 
+		/************Changed by  bdlions***************************/
 		// Creates the file menu
-		menu = add(new JMenu(mxResources.get("file")));
+		fileMenu = add(new JMenu(mxResources.get("file")));
 
-		menu.add(editor.bind(mxResources.get("new"), new NewAction(), "/com/mxgraph/examples/swing/images/new.gif"));
-		menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/com/mxgraph/examples/swing/images/open.gif"));
-		menu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/com/mxgraph/examples/swing/images/open.gif"));
+		fileMenu.add(editor.bind(mxResources.get("new"), new NewAction(), "/com/mxgraph/examples/swing/images/new.gif"));
+		fileMenu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/com/mxgraph/examples/swing/images/open.gif"));
+		fileMenu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/com/mxgraph/examples/swing/images/open.gif"));
 
-		menu.addSeparator();
+		fileMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("save"), new SaveAction(false), "/com/mxgraph/examples/swing/images/save.gif"));
-		menu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true), "/com/mxgraph/examples/swing/images/saveas.gif"));
+		fileMenu.add(editor.bind(mxResources.get("save"), new SaveAction(false), "/com/mxgraph/examples/swing/images/save.gif"));
+		fileMenu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true), "/com/mxgraph/examples/swing/images/saveas.gif"));
 
-		menu.addSeparator();
+		fileMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("pageSetup"), new PageSetupAction(), "/com/mxgraph/examples/swing/images/pagesetup.gif"));
-		menu.add(editor.bind(mxResources.get("print"), new PrintAction(), "/com/mxgraph/examples/swing/images/print.gif"));
+		fileMenu.add(editor.bind(mxResources.get("pageSetup"), new PageSetupAction(), "/com/mxgraph/examples/swing/images/pagesetup.gif"));
+		fileMenu.add(editor.bind(mxResources.get("print"), new PrintAction(), "/com/mxgraph/examples/swing/images/print.gif"));
 
-		menu.addSeparator();
+		fileMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
+		fileMenu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
 
 		// Creates the edit menu
-		menu = add(new JMenu(mxResources.get("edit")));
+		editMenu = add(new JMenu(mxResources.get("edit")));
 
-		menu.add(editor.bind(mxResources.get("undo"), new HistoryAction(true), "/com/mxgraph/examples/swing/images/undo.gif"));
-		menu.add(editor.bind(mxResources.get("redo"), new HistoryAction(false), "/com/mxgraph/examples/swing/images/redo.gif"));
+		editMenu.add(editor.bind(mxResources.get("undo"), new HistoryAction(true), "/com/mxgraph/examples/swing/images/undo.gif"));
+		editMenu.add(editor.bind(mxResources.get("redo"), new HistoryAction(false), "/com/mxgraph/examples/swing/images/redo.gif"));
 
-		menu.addSeparator();
+		editMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("cut"), TransferHandler.getCutAction(), "/com/mxgraph/examples/swing/images/cut.gif"));
-		menu.add(editor.bind(mxResources.get("copy"), TransferHandler.getCopyAction(), "/com/mxgraph/examples/swing/images/copy.gif"));
-		menu.add(editor.bind(mxResources.get("paste"), TransferHandler.getPasteAction(), "/com/mxgraph/examples/swing/images/paste.gif"));
+		editMenu.add(editor.bind(mxResources.get("cut"), TransferHandler.getCutAction(), "/com/mxgraph/examples/swing/images/cut.gif"));
+		editMenu.add(editor.bind(mxResources.get("copy"), TransferHandler.getCopyAction(), "/com/mxgraph/examples/swing/images/copy.gif"));
+		editMenu.add(editor.bind(mxResources.get("paste"), TransferHandler.getPasteAction(), "/com/mxgraph/examples/swing/images/paste.gif"));
 
-		menu.addSeparator();
+		editMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("delete"), mxGraphActions.getDeleteAction(), "/com/mxgraph/examples/swing/images/delete.gif"));
+		editMenu.add(editor.bind(mxResources.get("delete"), mxGraphActions.getDeleteAction(), "/com/mxgraph/examples/swing/images/delete.gif"));
 
-		menu.addSeparator();
+		editMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("selectAll"), mxGraphActions.getSelectAllAction()));
-		menu.add(editor.bind(mxResources.get("selectNone"), mxGraphActions.getSelectNoneAction()));
+		editMenu.add(editor.bind(mxResources.get("selectAll"), mxGraphActions.getSelectAllAction()));
+		editMenu.add(editor.bind(mxResources.get("selectNone"), mxGraphActions.getSelectNoneAction()));
 
-		menu.addSeparator();
+		editMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
-		menu.add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction()));
+		editMenu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
+		editMenu.add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction()));
 
 		// Creates the view menu
-		menu = add(new JMenu(mxResources.get("view")));
+		viewMenu = add(new JMenu(mxResources.get("view")));
 
-		JMenuItem item = menu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible", true,
+		JMenuItem item = viewMenu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible", true,
 				new ActionListener()
 				{
 					/**
@@ -200,16 +212,16 @@ public class EditorMenuBar extends JMenuBar
 			}
 		});
 
-		menu.add(new TogglePropertyItem(graphComponent, mxResources.get("antialias"), "AntiAlias", true));
+		viewMenu.add(new TogglePropertyItem(graphComponent, mxResources.get("antialias"), "AntiAlias", true));
 
-		menu.addSeparator();
+		viewMenu.addSeparator();
 
-		menu.add(new ToggleGridItem(editor, mxResources.get("grid")));
-		menu.add(new ToggleRulersItem(editor, mxResources.get("rulers")));
+		viewMenu.add(new ToggleGridItem(editor, mxResources.get("grid")));
+		viewMenu.add(new ToggleRulersItem(editor, mxResources.get("rulers")));
 
-		menu.addSeparator();
+		viewMenu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("zoom")));
+		submenu = (JMenu) viewMenu.add(new JMenu(mxResources.get("zoom")));
 
 		submenu.add(editor.bind("400%", new ScaleAction(4)));
 		submenu.add(editor.bind("200%", new ScaleAction(2)));
@@ -222,20 +234,56 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(editor.bind(mxResources.get("custom"), new ScaleAction(0)));
 
-		menu.addSeparator();
+		viewMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions.getZoomInAction()));
-		menu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions.getZoomOutAction()));
+		viewMenu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions.getZoomInAction()));
+		viewMenu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions.getZoomOutAction()));
 
-		menu.addSeparator();
+		viewMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
-		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
+		viewMenu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
+		viewMenu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
 
-		menu.addSeparator();
+		viewMenu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
+		viewMenu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
 
+		/******Changed by bdlions*********/
+		menu = add(new JMenu("Language"));
+		JMenuItem languageEnglish = menu.add(new JMenuItem( "English"));
+		languageEnglish.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				try {
+					SystemLang.changeDefaultLang("English");
+				} catch (FileNotFoundException | JAXBException
+						| URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				resetEditorMenu();
+			}
+		});
+		
+		JMenuItem languageFranch = menu.add(new JMenuItem( "French"));
+		languageFranch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				try {
+					SystemLang.changeDefaultLang("French");
+				} catch (FileNotFoundException | JAXBException
+						| URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				resetEditorMenu();
+			}
+		});
+		/******Changed by bdlions*********/
+		
+		
 		// Creates the format menu
 		menu = add(new JMenu(mxResources.get("format")));
 
@@ -780,7 +828,16 @@ public class EditorMenuBar extends JMenuBar
 		menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
 
 		menu.add(editor.bind(mxResources.get("style"), new StyleAction()));
+		/************Changed by  bdlions***************************/
 	}
+
+	/**************Changed by  bdlions********************/
+	public void resetEditorMenu(){
+		fileMenu.setText(mxResources.get("file"));
+		editMenu.setText(mxResources.get("edit"));
+		viewMenu.setText(mxResources.get("view"));
+	}
+	/**************Changed by  bdlions********************/
 
 	/**
 	 *

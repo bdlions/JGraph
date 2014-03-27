@@ -32,6 +32,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import com.mxgraph.examples.language.SystemLang;
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxCompactTreeLayout;
 import com.mxgraph.layout.mxEdgeLabelLayout;
@@ -71,7 +72,7 @@ public class BasicGraphEditor extends JPanel
 	{
 		try
 		{
-			mxResources.add("com/mxgraph/examples/swing/resources/editor");
+			mxResources.add(SystemLang.getDefaultLangFilePath());
 		}
 		catch (Exception e)
 		{

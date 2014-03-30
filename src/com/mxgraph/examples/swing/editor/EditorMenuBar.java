@@ -1,13 +1,23 @@
 package com.mxgraph.examples.swing.editor;
 
 import java.awt.Dimension;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.ResourceBundle;
 
+import javax.security.auth.callback.LanguageCallback;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -250,37 +260,35 @@ public class EditorMenuBar extends JMenuBar
 
 		/******Changed by bdlions*********/
 		menu = add(new JMenu("Language"));
-		JMenuItem languageEnglish = menu.add(new JMenuItem( "English"));
-		languageEnglish.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				try {
-					SystemLang.changeDefaultLang("English");
-				} catch (FileNotFoundException | JAXBException
-						| URISyntaxException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				resetEditorMenu();
-			}
-		});
 		
-		JMenuItem languageFranch = menu.add(new JMenuItem( "French"));
-		languageFranch.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				try {
-					SystemLang.changeDefaultLang("French");
-				} catch (FileNotFoundException | JAXBException
-						| URISyntaxException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		ResourceBundle rb = ResourceBundle.getBundle(SystemLang.getLangConfigFilePath());
+		ArrayList<String> reverseList = new ArrayList<String>();
+		Enumeration<String> keys = rb.getKeys();
+		
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			reverseList.add(key);
+		}
+		Collections.reverse(reverseList);
+	    for (Object key : reverseList) {
+
+			JMenuItem languageEnglish = menu.add(new JMenuItem( key.toString() ));
+			languageEnglish.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg) {
+					// TODO Auto-generated method stub
+					try {
+						SystemLang.changeDefaultLang(arg.getActionCommand());
+					} catch (FileNotFoundException | JAXBException
+							| URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					resetEditorMenu();
 				}
-				resetEditorMenu();
-			}
-		});
+			});
+			
+		}
 		/******Changed by bdlions*********/
 		
 		

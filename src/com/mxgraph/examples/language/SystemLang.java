@@ -54,6 +54,11 @@ public class SystemLang {
 		return langProperty.langEntry.entry;
 	}
 	
+	public static String getLangConfigFilePath()
+	{
+		return "com/mxgraph/examples/language/resources/langFileMapper";
+	}
+	
 	public static void main(String args[]) throws JAXBException, FileNotFoundException, URISyntaxException{
 		
 		System.out.println(getDefaultLangFilePath());

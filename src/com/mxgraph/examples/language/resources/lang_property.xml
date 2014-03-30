@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!--  created by bdlions -->
 <properties>
 	<comment>Language</comment>
 	<entry key="language">English</entry>

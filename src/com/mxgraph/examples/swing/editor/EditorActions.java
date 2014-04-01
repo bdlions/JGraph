@@ -529,6 +529,9 @@ public class EditorActions
 		 */
 		protected String lastDir = null;
 
+		/****************Changed by bdlions***********************/
+		public int paletteTtype;
+		/****************Changed by bdlions***********************/
 		/**
 		 * 
 		 */
@@ -536,7 +539,6 @@ public class EditorActions
 		{
 			this.showDialog = showDialog;
 		}
-
 		/**
 		 * Saves XML+PNG format.
 		 */
@@ -628,10 +630,12 @@ public class EditorActions
 					FileFilter defaultFilter = xmlPngFilter;
 					fc.addChoosableFileFilter(defaultFilter);
 
+					/****************Changed by bdlions***********************/
 					// Adds special vector graphics formats and HTML
 					fc.addChoosableFileFilter(new DefaultFileFilter(".mxe",
 							"mxGraph Editor " + mxResources.get("file")
-									+ " (.mxe)"));
+									+ " (.mxe"+paletteTtype+")"));
+					/****************Changed by bdlions***********************/
 					fc.addChoosableFileFilter(new DefaultFileFilter(".txt",
 							"Graph Drawing " + mxResources.get("file")
 									+ " (.txt)"));

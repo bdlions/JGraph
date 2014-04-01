@@ -330,7 +330,16 @@ public class BasicGraphEditor extends JPanel
 
 		return palette;
 	}
-
+	/****************Changed by bdlions***********************/
+	/**
+	 * 
+	 */
+	public void removePalette()
+	{
+		libraryPane.removeTabAt(0);
+		
+	}
+	/****************Changed by bdlions***********************/
 	/**
 	 * 
 	 */

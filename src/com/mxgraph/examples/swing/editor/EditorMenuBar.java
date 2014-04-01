@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 import javax.security.auth.callback.LanguageCallback;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -36,6 +37,7 @@ import com.mxgraph.analysis.mxGraphStructure;
 import com.mxgraph.analysis.mxTraversal;
 import com.mxgraph.costfunction.mxCostFunction;
 import com.mxgraph.examples.language.SystemLang;
+import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorActions.AlignCellsAction;
 import com.mxgraph.examples.swing.editor.EditorActions.AutosizeAction;
 import com.mxgraph.examples.swing.editor.EditorActions.BackgroundAction;
@@ -93,6 +95,33 @@ public class EditorMenuBar extends JMenuBar
 	private JMenu fileMenu; 
 	private JMenu editMenu;
 	private JMenu viewMenu;
+	private static EditorPalette familiesPalette;
+	private static EditorPalette homePalette;
+	private static EditorPalette processPalette;
+	private static String selectedPalette;
+	private static SaveAction saveAction;
+	private static SaveAction saveAsAction;
+	
+	private enum Palette {
+		FAMILIES("Families"),
+		HOME("Home"),
+		PROCESS("Process")
+		;
+		/**
+		 * @param text
+		 */
+		private Palette(final String text) {
+			this.text = text;
+		}
+
+		private final String text;
+		@Override
+		public String toString() {
+			return text;
+		}
+	}
+
+	private static BasicGraphEditor editor;
 	/************Changed by bdlions***************/
 
 	public enum AnalyzeType
@@ -102,6 +131,7 @@ public class EditorMenuBar extends JMenuBar
 
 	public EditorMenuBar(final BasicGraphEditor editor)
 	{
+		this.editor = editor;
 		final mxGraphComponent graphComponent = editor.getGraphComponent();
 		final mxGraph graph = graphComponent.getGraph();
 		mxAnalysisGraph aGraph = new mxAnalysisGraph();
@@ -119,8 +149,11 @@ public class EditorMenuBar extends JMenuBar
 
 		fileMenu.addSeparator();
 
-		fileMenu.add(editor.bind(mxResources.get("save"), new SaveAction(false), "/com/mxgraph/examples/swing/images/save.gif"));
-		fileMenu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true), "/com/mxgraph/examples/swing/images/saveas.gif"));
+		saveAction = new SaveAction(false);
+		saveAsAction = new SaveAction(true);
+		
+		fileMenu.add(editor.bind(mxResources.get("save"), saveAction, "/com/mxgraph/examples/swing/images/save.gif"));
+		fileMenu.add(editor.bind(mxResources.get("saveAs"), saveAsAction, "/com/mxgraph/examples/swing/images/saveas.gif"));
 
 		fileMenu.addSeparator();
 
@@ -289,6 +322,43 @@ public class EditorMenuBar extends JMenuBar
 			});
 			
 		}
+	    
+	    //by default insert familypalette
+	    insertFamilyPalette();
+	    
+	    menu = add(new JMenu("Change Type"));
+	    JMenuItem type1 = menu.add(new JMenuItem( "Type 1" ));
+	    type1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				// TODO Auto-generated method stub
+				editor.removePalette();
+				insertFamilyPalette();
+			}
+		});
+	    
+	    JMenuItem type2 = menu.add(new JMenuItem( "Type 2" ));
+	    type2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				// TODO Auto-generated method stub
+				editor.removePalette();
+				insertHomePalette();
+			}
+		});
+		
+	    JMenuItem type3 = menu.add(new JMenuItem( "Type 3" ));
+	    type3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				// TODO Auto-generated method stub
+				editor.removePalette();
+				insertProcessPalette();
+			}
+		});
+		
+	    
+		
 		/******Changed by bdlions*********/
 		
 		
@@ -571,7 +641,100 @@ public class EditorMenuBar extends JMenuBar
 			}
 		});
 	}
+	
+	public static void insertFamilyPalette(){
+		familiesPalette = editor.insertPalette("Families");
+		selectedPalette = Palette.FAMILIES.toString();
+		saveAction.paletteTtype = 1; 
+		saveAsAction.paletteTtype = 1;
+		
+		familiesPalette
+				.addTemplate(
+						"Container",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/swimlane.png")),
+						"swimlane", 280, 280, "Container");
+		familiesPalette.addTemplate(
+				"Icon",
+				new ImageIcon(
+						GraphEditor.class
+								.getResource("/com/mxgraph/examples/swing/images/rounded.png")),
+				"icon;image=/com/mxgraph/examples/swing/images/wrench.png",
+				70, 70, "Icon");
+		familiesPalette.addTemplate(
+				"Label",
+				new ImageIcon(
+						GraphEditor.class
+								.getResource("/com/mxgraph/examples/swing/images/rounded.png")),
+				"label;image=/com/mxgraph/examples/swing/images/gear.png",
+				130, 50, "Label");
+	}
+	/****************Changed by bdlions***********************/
+	public static void insertHomePalette(){
+		homePalette = editor.insertPalette("Home");
+		selectedPalette = Palette.HOME.toString();
+		saveAction.paletteTtype = 2; 
+		saveAsAction.paletteTtype = 2;
+		
+		homePalette
+				.addTemplate(
+						"Box",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/box.png")),
+						"image;image=/com/mxgraph/examples/swing/images/box.png",
+						50, 50, "Box");
+		homePalette
+				.addTemplate(
+						"Cube",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/cube_green.png")),
+						"image;image=/com/mxgraph/examples/swing/images/cube_green.png",
+						50, 50, "Cube");
+		homePalette
+				.addTemplate(
+						"User",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/dude3.png")),
+						"roundImage;image=/com/mxgraph/examples/swing/images/dude3.png",
+						50, 50, "User");
+	}
+	public static void insertProcessPalette(){
+		processPalette = editor.insertPalette("Process");
+		selectedPalette = Palette.PROCESS.toString();
+		saveAction.paletteTtype = 3; 
+		saveAsAction.paletteTtype = 3;
+		
+		processPalette
+				.addTemplate(
+						"Cancel",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/cancel_end.png")),
+						"roundImage;image=/com/mxgraph/examples/swing/images/cancel_end.png",
+						80, 80, "Cancel");
+		processPalette
+				.addTemplate(
+						"Error",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/error.png")),
+						"roundImage;image=/com/mxgraph/examples/swing/images/error.png",
+						80, 80, "Error");
+		processPalette
+				.addTemplate(
+						"Event",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/event.png")),
+						"roundImage;image=/com/mxgraph/examples/swing/images/event.png",
+						80, 80, "Event");
 
+	}
+	/****************Changed by bdlions***********************/
 	/**
 	 * Adds menu items to the given shape menu. This is factored out because
 	 * the shape menu appears in the menubar and also in the popupmenu.

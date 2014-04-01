@@ -70,7 +70,8 @@ public class GraphEditor extends BasicGraphEditor
 		super(appTitle, component);
 		final mxGraph graph = graphComponent.getGraph();
 
-		// Creates the shapes palette
+		/****************Changed by bdlions***********************/
+		/*// Creates the shapes palette
 		EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
 		EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
 		EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
@@ -434,7 +435,8 @@ public class GraphEditor extends BasicGraphEditor
 								GraphEditor.class
 										.getResource("/com/mxgraph/examples/swing/images/timer.png")),
 						"roundImage;image=/com/mxgraph/examples/swing/images/timer.png",
-						80, 80, "Timer");
+						80, 80, "Timer");*/
+		/****************Changed by bdlions***********************/
 	}
 
 	/**

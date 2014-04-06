@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 import javax.security.auth.callback.LanguageCallback;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -95,29 +96,184 @@ public class EditorMenuBar extends JMenuBar
 	private JMenu fileMenu; 
 	private JMenu editMenu;
 	private JMenu viewMenu;
+	private JMenu formatMenu;
+	private JMenu shapeMenu;
+	private JMenu diagramMenu;
+	private JMenu backGroundSubmenu;
+	private JMenu layoutSubmenu;
+	private JMenu selectionSubmenu;
+	private JMenu styleSubmenu;
+	private JMenu optionMenu;
+	private JMenu displaySubmenu;
+	private JMenu zoomSubmenu;
+	private JMenu dragAndDropSubmenu;
+	private JMenu labelsSubmenu;
+	private JMenu connectionsSubmenu;
+	private JMenu windowMenu;
+	private JMenu analyzeMenu;
+	private JMenu generateMenu;
+	private JMenu helpMenu;
+	
+	/*all file menu sub menu*/
+	private JMenuItem file_menu_item_new;
+	private JMenuItem file_menu_item_open;
+	private JMenuItem file_menu_item_import;
+	private JMenuItem file_menu_item_save;
+	private JMenuItem file_menu_item_save_as;
+	private JMenuItem file_menu_item_page_setup;
+	private JMenuItem file_menu_item_print;
+	private JMenuItem file_menu_item_exit;
+	
+	/*all edit sub menu*/
+	private JMenuItem edit_menu_item_undo;
+	private JMenuItem edit_menu_item_redo;
+	private JMenuItem edit_menu_item_cut;
+	private JMenuItem edit_menu_item_copy;
+	private JMenuItem edit_menu_item_paste;
+	private JMenuItem edit_menu_item_delete;
+	private JMenuItem edit_menu_item_select_all;
+	private JMenuItem edit_menu_item_select_none;
+	private JMenuItem edit_menu_item_warning;
+	
+	/*all view menu*/
+	private JMenuItem view_menu_item_page_layout;
+	private JMenuItem view_menu_item_antialias;
+	private JMenuItem view_menu_item_grid;
+	private JMenuItem view_menu_item_rulers;
+	private JMenu view_menu_item_zoom;
+	private JMenuItem view_menu_item_zoomin;
+	private JMenuItem view_menu_item_zoomout;
+	private JMenuItem view_menu_item_page;
+	private JMenuItem view_menu_item_width;
+	private JMenuItem view_menu_item_actual_size;
+	private JMenuItem view_menu_item_custom;
+	
+	/*all format menu item*/
+	private static JMenu format_menu_item_background;
+	private static JMenuItem format_background_menu_item_fill_color;
+	private static JMenuItem format_background_menu_item_gradient;
+	private static JMenuItem format_background_menu_item_image;
+	private static JMenuItem format_background_menu_item_shadow;
+	private static JMenuItem format_background_menu_item_opacity;
+	
+	private static JMenu format_menu_item_label;
+	private static JMenuItem format_label_menu_item_font_color;
+	private static JMenuItem format_label_menu_item_label_fill;
+	private static JMenuItem format_label_menu_item_label_border;
+	private static JMenuItem format_label_menu_item_rotate_label;
+	private static JMenuItem format_label_menu_item_text_opacity;
+	private static JMenu format_label_menu_item_position;
+	private static JMenuItem format_label_menu_item_word_wrap;
+	private static JMenuItem format_label_menu_item_no_word_wrap;
+	private static JMenuItem format_label_menu_item_hide;
+	
+	private static JMenu format_menu_item_line;
+	private static JMenuItem format_line_menu_item_line_color;
+	private static JMenuItem format_line_menu_item_orthogonal;
+	private static JMenuItem format_line_menu_item_dashed;
+	private static JMenuItem format_line_menu_item_line_width;
+	
+	private static JMenu format_menu_item_connector;
+	private static JMenuItem format_connector_menu_item_straight;
+	private static JMenuItem format_connector_menu_item_horizontal;
+	private static JMenuItem format_connector_menu_item_vertical;
+	private static JMenuItem format_connector_menu_item_entity_relation;
+	private static JMenuItem format_connector_menu_item_arrow;
+	private static JMenuItem format_connector_menu_item_plain;
+	
+	private static JMenu format_menu_item_line_start;
+	private static JMenuItem format_line_start_menu_item_open;
+	private static JMenuItem format_line_start_menu_item_classic;
+	private static JMenuItem format_line_start_menu_item_block;
+	private static JMenuItem format_line_start_menu_item_diamond;
+	private static JMenuItem format_line_start_menu_item_oval;
+	private static JMenuItem format_line_start_menu_item_none;
+	private static JMenuItem format_line_start_menu_item_size;
+	
+	private static JMenu format_menu_item_lineed;
+	private static JMenuItem format_linned_menu_item_open;
+	private static JMenuItem format_linned_menu_item_classic;
+	private static JMenuItem format_linned_menu_item_block;
+	private static JMenuItem format_linned_menu_item_diamond;
+	private static JMenuItem format_linned_menu_item_oval;
+	private static JMenuItem format_linned_menu_item_none;
+	private static JMenuItem format_linned_menu_item_size;
+	
+	private static JMenu format_menu_item_alignment;
+	private static JMenuItem format_alignment_menu_item_left;
+	private static JMenuItem format_alignment_menu_item_center;
+	private static JMenuItem format_alignment_menu_item_right;
+	private static JMenuItem format_alignment_menu_item_top;
+	private static JMenuItem format_alignment_menu_item_middle;
+	private static JMenuItem format_alignment_menu_item_bottom;
+	
+	private static JMenu format_menu_item_spacing;
+	private static JMenuItem format_spacing_menu_item_top;
+	private static JMenuItem format_spacing_menu_item_right;
+	private static JMenuItem format_spacing_menu_item_bottom;
+	private static JMenuItem format_spacing_menu_item_left;
+	private static JMenuItem format_spacing_menu_item_global;
+	private static JMenuItem format_spacing_menu_item_source_spacing;
+	private static JMenuItem format_spacing_menu_item_target_spacing;
+	private static JMenuItem format_spacing_menu_item_perimeter;
+	
+	private static JMenu format_menu_item_direction;
+	private static JMenuItem format_direction_menu_item_north;
+	private static JMenuItem format_direction_menu_item_east;
+	private static JMenuItem format_direction_menu_item_south;
+	private static JMenuItem format_direction_menu_item_west;
+	private static JMenuItem format_direction_menu_item_rotation;
+	
+	private static JMenuItem format_menu_item_rounded;
+	private static JMenuItem format_menu_item_style;
+	
+	/*all shape menu item*/
+	private static JMenuItem shape_menu_item_exitGroup;
+	private static JMenuItem shape_menu_item_enterGroup;
+	private static JMenuItem shape_menu_item_home;
+	private static JMenuItem shape_menu_item_group;
+	private static JMenuItem shape_menu_item_unGroup;
+	private static JMenuItem shape_menu_item_removeFromGroup;
+	private static JMenuItem shape_menu_item_updateGroupBounds;
+	private static JMenuItem shape_menu_item_collapse;
+	private static JMenuItem shape_menu_item_expand;
+	private static JMenuItem shape_menu_item_toBack;
+	private static JMenuItem shape_menu_item_toFront;
+	private static JMenuItem shape_menu_item_autoSize;
+	
+	
 	private static EditorPalette familiesPalette;
 	private static EditorPalette homePalette;
 	private static EditorPalette processPalette;
 	private static String selectedPalette;
+	
 	private static SaveAction saveAction;
 	private static SaveAction saveAsAction;
+	private static OpenAction openAction;
 	
 	private enum Palette {
-		FAMILIES("Families"),
-		HOME("Home"),
-		PROCESS("Process")
+		FAMILIES("Families", 1),
+		HOME("Home", 2),
+		PROCESS("Process", 3)
 		;
 		/**
 		 * @param text
 		 */
-		private Palette(final String text) {
+		private Palette(final String text, int pos) {
 			this.text = text;
+			this.pos = pos;
 		}
 
 		private final String text;
 		@Override
 		public String toString() {
 			return text;
+		}
+		
+		private final int pos;
+		
+		public int toNumber(){
+			return pos;
 		}
 	}
 
@@ -143,57 +299,102 @@ public class EditorMenuBar extends JMenuBar
 		// Creates the file menu
 		fileMenu = add(new JMenu(mxResources.get("file")));
 
-		fileMenu.add(editor.bind(mxResources.get("new"), new NewAction(), "/com/mxgraph/examples/swing/images/new.gif"));
-		fileMenu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/com/mxgraph/examples/swing/images/open.gif"));
-		fileMenu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/com/mxgraph/examples/swing/images/open.gif"));
-
+		file_menu_item_new = new JMenuItem();
+		file_menu_item_new.setAction(editor.bind(mxResources.get("new"), new NewAction(), "/com/mxgraph/examples/swing/images/new.gif"));
+		fileMenu.add(file_menu_item_new);
+		
+		openAction = new OpenAction();
+		
+		file_menu_item_open = new JMenuItem();
+		file_menu_item_open.setAction(editor.bind(mxResources.get("openFile"), openAction, "/com/mxgraph/examples/swing/images/open.gif"));
+		fileMenu.add(file_menu_item_open);
+		
+		file_menu_item_import = new JMenuItem();
+		file_menu_item_import.setAction(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/com/mxgraph/examples/swing/images/open.gif"));
+		fileMenu.add(file_menu_item_import);
+		
 		fileMenu.addSeparator();
 
 		saveAction = new SaveAction(false);
 		saveAsAction = new SaveAction(true);
 		
-		fileMenu.add(editor.bind(mxResources.get("save"), saveAction, "/com/mxgraph/examples/swing/images/save.gif"));
-		fileMenu.add(editor.bind(mxResources.get("saveAs"), saveAsAction, "/com/mxgraph/examples/swing/images/saveas.gif"));
+		file_menu_item_save = new JMenuItem();
+		file_menu_item_save.setAction(editor.bind(mxResources.get("save"), saveAction, "/com/mxgraph/examples/swing/images/save.gif"));
+		fileMenu.add(file_menu_item_save);
+		
+		file_menu_item_save_as = new JMenuItem();
+		file_menu_item_save_as.setAction(editor.bind(mxResources.get("saveAs"), saveAsAction, "/com/mxgraph/examples/swing/images/saveas.gif"));
+		fileMenu.add(file_menu_item_save_as);
 
 		fileMenu.addSeparator();
 
-		fileMenu.add(editor.bind(mxResources.get("pageSetup"), new PageSetupAction(), "/com/mxgraph/examples/swing/images/pagesetup.gif"));
-		fileMenu.add(editor.bind(mxResources.get("print"), new PrintAction(), "/com/mxgraph/examples/swing/images/print.gif"));
+		file_menu_item_page_setup = new JMenuItem();
+		file_menu_item_page_setup.setAction(editor.bind(mxResources.get("pageSetup"), new PageSetupAction(), "/com/mxgraph/examples/swing/images/pagesetup.gif"));
+		fileMenu.add(file_menu_item_page_setup);
+		
+		file_menu_item_print = new JMenuItem();
+		file_menu_item_print.setAction(editor.bind(mxResources.get("print"), new PrintAction(), "/com/mxgraph/examples/swing/images/print.gif"));
+		fileMenu.add(file_menu_item_print);
 
 		fileMenu.addSeparator();
 
-		fileMenu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
+		file_menu_item_exit = new JMenuItem();
+		file_menu_item_exit.setAction(editor.bind(mxResources.get("exit"), new ExitAction()));
+		fileMenu.add(file_menu_item_exit);
 
 		// Creates the edit menu
 		editMenu = add(new JMenu(mxResources.get("edit")));
 
-		editMenu.add(editor.bind(mxResources.get("undo"), new HistoryAction(true), "/com/mxgraph/examples/swing/images/undo.gif"));
-		editMenu.add(editor.bind(mxResources.get("redo"), new HistoryAction(false), "/com/mxgraph/examples/swing/images/redo.gif"));
+		edit_menu_item_undo = new JMenuItem();
+		edit_menu_item_undo.setAction(editor.bind(mxResources.get("undo"), new HistoryAction(true), "/com/mxgraph/examples/swing/images/undo.gif"));
+		editMenu.add(edit_menu_item_undo);
+		
+		edit_menu_item_redo = new JMenuItem();
+		edit_menu_item_redo.setAction(editor.bind(mxResources.get("redo"), new HistoryAction(false), "/com/mxgraph/examples/swing/images/redo.gif"));
+		editMenu.add(edit_menu_item_redo);
 
 		editMenu.addSeparator();
 
-		editMenu.add(editor.bind(mxResources.get("cut"), TransferHandler.getCutAction(), "/com/mxgraph/examples/swing/images/cut.gif"));
-		editMenu.add(editor.bind(mxResources.get("copy"), TransferHandler.getCopyAction(), "/com/mxgraph/examples/swing/images/copy.gif"));
-		editMenu.add(editor.bind(mxResources.get("paste"), TransferHandler.getPasteAction(), "/com/mxgraph/examples/swing/images/paste.gif"));
+		edit_menu_item_cut = new JMenuItem();
+		edit_menu_item_cut.setAction(editor.bind(mxResources.get("cut"), TransferHandler.getCutAction(), "/com/mxgraph/examples/swing/images/cut.gif"));
+		editMenu.add(edit_menu_item_cut);
+		
+		edit_menu_item_copy = new JMenuItem();
+		edit_menu_item_copy.setAction(editor.bind(mxResources.get("copy"), TransferHandler.getCopyAction(), "/com/mxgraph/examples/swing/images/copy.gif"));
+		editMenu.add(edit_menu_item_copy);
+		
+		edit_menu_item_paste = new JMenuItem();
+		edit_menu_item_paste.setAction(editor.bind(mxResources.get("paste"), TransferHandler.getPasteAction(), "/com/mxgraph/examples/swing/images/paste.gif"));
+		editMenu.add(edit_menu_item_paste);
 
 		editMenu.addSeparator();
 
-		editMenu.add(editor.bind(mxResources.get("delete"), mxGraphActions.getDeleteAction(), "/com/mxgraph/examples/swing/images/delete.gif"));
+		edit_menu_item_delete = new JMenuItem();
+		edit_menu_item_delete.setAction(editor.bind(mxResources.get("delete"), mxGraphActions.getDeleteAction(), "/com/mxgraph/examples/swing/images/delete.gif"));
+		editMenu.add(edit_menu_item_delete);
 
 		editMenu.addSeparator();
 
-		editMenu.add(editor.bind(mxResources.get("selectAll"), mxGraphActions.getSelectAllAction()));
-		editMenu.add(editor.bind(mxResources.get("selectNone"), mxGraphActions.getSelectNoneAction()));
+		edit_menu_item_select_all = new JMenuItem();
+		edit_menu_item_select_all.setAction(editor.bind(mxResources.get("selectAll"), mxGraphActions.getSelectAllAction()));
+		editMenu.add(edit_menu_item_select_all);
+		
+		edit_menu_item_select_none = new JMenuItem();
+		edit_menu_item_select_none.setAction(editor.bind(mxResources.get("selectNone"), mxGraphActions.getSelectNoneAction()));
+		editMenu.add(edit_menu_item_select_none);
 
 		editMenu.addSeparator();
 
-		editMenu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
-		editMenu.add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction()));
+		edit_menu_item_warning = new JMenuItem();
+		edit_menu_item_warning.setAction(editor.bind(mxResources.get("warning"), new WarningAction()));
+		editMenu.add(edit_menu_item_warning);
+		
+		//editMenu.add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction()));
 
 		// Creates the view menu
 		viewMenu = add(new JMenu(mxResources.get("view")));
 
-		JMenuItem item = viewMenu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible", true,
+		view_menu_item_page_layout = viewMenu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible", true,
 				new ActionListener()
 				{
 					/**
@@ -212,7 +413,7 @@ public class EditorMenuBar extends JMenuBar
 					}
 				}));
 
-		item.addActionListener(new ActionListener()
+		view_menu_item_page_layout.addActionListener(new ActionListener()
 		{
 			/*
 			 * (non-Javadoc)
@@ -255,41 +456,41 @@ public class EditorMenuBar extends JMenuBar
 			}
 		});
 
-		viewMenu.add(new TogglePropertyItem(graphComponent, mxResources.get("antialias"), "AntiAlias", true));
+		view_menu_item_antialias = viewMenu.add(new TogglePropertyItem(graphComponent, mxResources.get("antialias"), "AntiAlias", true));
 
 		viewMenu.addSeparator();
 
-		viewMenu.add(new ToggleGridItem(editor, mxResources.get("grid")));
-		viewMenu.add(new ToggleRulersItem(editor, mxResources.get("rulers")));
+		view_menu_item_grid = viewMenu.add(new ToggleGridItem(editor, mxResources.get("grid")));
+		view_menu_item_rulers = viewMenu.add(new ToggleRulersItem(editor, mxResources.get("rulers")));
 
 		viewMenu.addSeparator();
 
-		submenu = (JMenu) viewMenu.add(new JMenu(mxResources.get("zoom")));
+		view_menu_item_zoom = (JMenu) viewMenu.add(new JMenu(mxResources.get("zoom")));
 
-		submenu.add(editor.bind("400%", new ScaleAction(4)));
-		submenu.add(editor.bind("200%", new ScaleAction(2)));
-		submenu.add(editor.bind("150%", new ScaleAction(1.5)));
-		submenu.add(editor.bind("100%", new ScaleAction(1)));
-		submenu.add(editor.bind("75%", new ScaleAction(0.75)));
-		submenu.add(editor.bind("50%", new ScaleAction(0.5)));
+		view_menu_item_zoom.add(editor.bind("400%", new ScaleAction(4)));
+		view_menu_item_zoom.add(editor.bind("200%", new ScaleAction(2)));
+		view_menu_item_zoom.add(editor.bind("150%", new ScaleAction(1.5)));
+		view_menu_item_zoom.add(editor.bind("100%", new ScaleAction(1)));
+		view_menu_item_zoom.add(editor.bind("75%", new ScaleAction(0.75)));
+		view_menu_item_zoom.add(editor.bind("50%", new ScaleAction(0.5)));
 
-		submenu.addSeparator();
+		view_menu_item_zoom.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("custom"), new ScaleAction(0)));
-
-		viewMenu.addSeparator();
-
-		viewMenu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions.getZoomInAction()));
-		viewMenu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions.getZoomOutAction()));
+		view_menu_item_custom = view_menu_item_zoom.add(editor.bind(mxResources.get("custom"), new ScaleAction(0)));
 
 		viewMenu.addSeparator();
 
-		viewMenu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
-		viewMenu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
+		view_menu_item_zoomin = viewMenu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions.getZoomInAction()));
+		view_menu_item_zoomout = viewMenu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions.getZoomOutAction()));
 
 		viewMenu.addSeparator();
 
-		viewMenu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
+		view_menu_item_page = viewMenu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
+		view_menu_item_width = viewMenu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
+
+		viewMenu.addSeparator();
+
+		view_menu_item_actual_size = viewMenu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
 
 		/******Changed by bdlions*********/
 		menu = add(new JMenu("Language"));
@@ -363,101 +564,101 @@ public class EditorMenuBar extends JMenuBar
 		
 		
 		// Creates the format menu
-		menu = add(new JMenu(mxResources.get("format")));
+		formatMenu = add(new JMenu(mxResources.get("format")));
 
-		populateFormatMenu(menu, editor);
+		populateFormatMenu(formatMenu, editor);
 
 		// Creates the shape menu
-		menu = add(new JMenu(mxResources.get("shape")));
+		shapeMenu = add(new JMenu(mxResources.get("shape")));
 
-		populateShapeMenu(menu, editor);
+		populateShapeMenu(shapeMenu, editor);
 
 		// Creates the diagram menu
-		menu = add(new JMenu(mxResources.get("diagram")));
+		diagramMenu = add(new JMenu(mxResources.get("diagram")));
 
-		menu.add(new ToggleOutlineItem(editor, mxResources.get("outline")));
+		diagramMenu.add(new ToggleOutlineItem(editor, mxResources.get("outline")));
 
-		menu.addSeparator();
+		diagramMenu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("background")));
+		backGroundSubmenu = (JMenu) diagramMenu.add(new JMenu(mxResources.get("background")));
 
-		submenu.add(editor.bind(mxResources.get("backgroundColor"), new BackgroundAction()));
-		submenu.add(editor.bind(mxResources.get("backgroundImage"), new BackgroundImageAction()));
+		backGroundSubmenu.add(editor.bind(mxResources.get("backgroundColor"), new BackgroundAction()));
+		backGroundSubmenu.add(editor.bind(mxResources.get("backgroundImage"), new BackgroundImageAction()));
 
-		submenu.addSeparator();
+		backGroundSubmenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("pageBackground"), new PageBackgroundAction()));
+		backGroundSubmenu.add(editor.bind(mxResources.get("pageBackground"), new PageBackgroundAction()));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("grid")));
+		backGroundSubmenu = (JMenu) diagramMenu.add(new JMenu(mxResources.get("grid")));
 
-		submenu.add(editor.bind(mxResources.get("gridSize"), new PromptPropertyAction(graph, "Grid Size", "GridSize")));
-		submenu.add(editor.bind(mxResources.get("gridColor"), new GridColorAction()));
+		backGroundSubmenu.add(editor.bind(mxResources.get("gridSize"), new PromptPropertyAction(graph, "Grid Size", "GridSize")));
+		backGroundSubmenu.add(editor.bind(mxResources.get("gridColor"), new GridColorAction()));
 
-		submenu.addSeparator();
+		backGroundSubmenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("dashed"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DASHED)));
-		submenu.add(editor.bind(mxResources.get("dot"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DOT)));
-		submenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(mxGraphComponent.GRID_STYLE_LINE)));
-		submenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(mxGraphComponent.GRID_STYLE_CROSS)));
+		backGroundSubmenu.add(editor.bind(mxResources.get("dashed"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DASHED)));
+		backGroundSubmenu.add(editor.bind(mxResources.get("dot"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DOT)));
+		backGroundSubmenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(mxGraphComponent.GRID_STYLE_LINE)));
+		backGroundSubmenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(mxGraphComponent.GRID_STYLE_CROSS)));
 
-		menu.addSeparator();
+		diagramMenu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("layout")));
+		layoutSubmenu = (JMenu) diagramMenu.add(new JMenu(mxResources.get("layout")));
 
-		submenu.add(editor.graphLayout("verticalHierarchical", true));
-		submenu.add(editor.graphLayout("horizontalHierarchical", true));
+		layoutSubmenu.add(editor.graphLayout("verticalHierarchical", true));
+		layoutSubmenu.add(editor.graphLayout("horizontalHierarchical", true));
 
-		submenu.addSeparator();
+		layoutSubmenu.addSeparator();
 
-		submenu.add(editor.graphLayout("verticalPartition", false));
-		submenu.add(editor.graphLayout("horizontalPartition", false));
+		layoutSubmenu.add(editor.graphLayout("verticalPartition", false));
+		layoutSubmenu.add(editor.graphLayout("horizontalPartition", false));
 
-		submenu.addSeparator();
+		layoutSubmenu.addSeparator();
 
-		submenu.add(editor.graphLayout("verticalStack", false));
-		submenu.add(editor.graphLayout("horizontalStack", false));
+		layoutSubmenu.add(editor.graphLayout("verticalStack", false));
+		layoutSubmenu.add(editor.graphLayout("horizontalStack", false));
 
-		submenu.addSeparator();
+		layoutSubmenu.addSeparator();
 
-		submenu.add(editor.graphLayout("verticalTree", true));
-		submenu.add(editor.graphLayout("horizontalTree", true));
+		layoutSubmenu.add(editor.graphLayout("verticalTree", true));
+		layoutSubmenu.add(editor.graphLayout("horizontalTree", true));
 
-		submenu.addSeparator();
+		layoutSubmenu.addSeparator();
 
-		submenu.add(editor.graphLayout("placeEdgeLabels", false));
-		submenu.add(editor.graphLayout("parallelEdges", false));
+		layoutSubmenu.add(editor.graphLayout("placeEdgeLabels", false));
+		layoutSubmenu.add(editor.graphLayout("parallelEdges", false));
 
-		submenu.addSeparator();
+		layoutSubmenu.addSeparator();
 
-		submenu.add(editor.graphLayout("organicLayout", true));
-		submenu.add(editor.graphLayout("circleLayout", true));
+		layoutSubmenu.add(editor.graphLayout("organicLayout", true));
+		layoutSubmenu.add(editor.graphLayout("circleLayout", true));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("selection")));
+		selectionSubmenu = (JMenu) diagramMenu.add(new JMenu(mxResources.get("selection")));
 
-		submenu.add(editor.bind(mxResources.get("selectPath"), new SelectShortestPathAction(false)));
-		submenu.add(editor.bind(mxResources.get("selectDirectedPath"), new SelectShortestPathAction(true)));
+		selectionSubmenu.add(editor.bind(mxResources.get("selectPath"), new SelectShortestPathAction(false)));
+		selectionSubmenu.add(editor.bind(mxResources.get("selectDirectedPath"), new SelectShortestPathAction(true)));
 
-		submenu.addSeparator();
+		selectionSubmenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("selectTree"), new SelectSpanningTreeAction(false)));
-		submenu.add(editor.bind(mxResources.get("selectDirectedTree"), new SelectSpanningTreeAction(true)));
+		selectionSubmenu.add(editor.bind(mxResources.get("selectTree"), new SelectSpanningTreeAction(false)));
+		selectionSubmenu.add(editor.bind(mxResources.get("selectDirectedTree"), new SelectSpanningTreeAction(true)));
 
-		menu.addSeparator();
+		diagramMenu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("stylesheet")));
+		styleSubmenu = (JMenu) diagramMenu.add(new JMenu(mxResources.get("stylesheet")));
 
-		submenu.add(editor.bind(mxResources.get("basicStyle"),
+		styleSubmenu.add(editor.bind(mxResources.get("basicStyle"),
 				new StylesheetAction("/com/mxgraph/examples/swing/resources/basic-style.xml")));
-		submenu.add(editor.bind(mxResources.get("defaultStyle"), new StylesheetAction(
+		styleSubmenu.add(editor.bind(mxResources.get("defaultStyle"), new StylesheetAction(
 				"/com/mxgraph/examples/swing/resources/default-style.xml")));
 
 		// Creates the options menu
-		menu = add(new JMenu(mxResources.get("options")));
+		optionMenu = add(new JMenu(mxResources.get("options")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("display")));
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("buffering"), "TripleBuffered", true));
+		displaySubmenu = (JMenu) optionMenu.add(new JMenu(mxResources.get("display")));
+		displaySubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("buffering"), "TripleBuffered", true));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("preferPageSize"), "PreferPageSize", true, new ActionListener()
+		displaySubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("preferPageSize"), "PreferPageSize", true, new ActionListener()
 		{
 			/**
 			 * 
@@ -472,20 +673,20 @@ public class EditorMenuBar extends JMenuBar
 		//submenu.add(new TogglePropertyItem(graphComponent, mxResources
 		//		.get("pageBreaks"), "PageBreaksVisible", true));
 
-		submenu.addSeparator();
+		displaySubmenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("tolerance"), new PromptPropertyAction(graphComponent, "Tolerance")));
+		displaySubmenu.add(editor.bind(mxResources.get("tolerance"), new PromptPropertyAction(graphComponent, "Tolerance")));
 
-		submenu.add(editor.bind(mxResources.get("dirty"), new ToggleDirtyAction()));
+		displaySubmenu.add(editor.bind(mxResources.get("dirty"), new ToggleDirtyAction()));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("zoom")));
+		zoomSubmenu = (JMenu) optionMenu.add(new JMenu(mxResources.get("zoom")));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerZoom"), "CenterZoom", true));
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("zoomToSelection"), "KeepSelectionVisibleOnZoom", true));
+		zoomSubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerZoom"), "CenterZoom", true));
+		zoomSubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("zoomToSelection"), "KeepSelectionVisibleOnZoom", true));
 
-		submenu.addSeparator();
+		zoomSubmenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerPage"), "CenterPage", true, new ActionListener()
+		zoomSubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerPage"), "CenterPage", true, new ActionListener()
 		{
 			/**
 			 * 
@@ -499,59 +700,59 @@ public class EditorMenuBar extends JMenuBar
 			}
 		}));
 
-		menu.addSeparator();
+		optionMenu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("dragAndDrop")));
+		dragAndDropSubmenu = (JMenu) optionMenu.add(new JMenu(mxResources.get("dragAndDrop")));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("dragEnabled"), "DragEnabled"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("dropEnabled"), "DropEnabled"));
+		dragAndDropSubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("dragEnabled"), "DragEnabled"));
+		dragAndDropSubmenu.add(new TogglePropertyItem(graph, mxResources.get("dropEnabled"), "DropEnabled"));
 
-		submenu.addSeparator();
+		dragAndDropSubmenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graphComponent.getGraphHandler(), mxResources.get("imagePreview"), "ImagePreview"));
+		dragAndDropSubmenu.add(new TogglePropertyItem(graphComponent.getGraphHandler(), mxResources.get("imagePreview"), "ImagePreview"));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("labels")));
+		labelsSubmenu = (JMenu) optionMenu.add(new JMenu(mxResources.get("labels")));
 
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("htmlLabels"), "HtmlLabels", true));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("showLabels"), "LabelsVisible", true));
+		labelsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("htmlLabels"), "HtmlLabels", true));
+		labelsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("showLabels"), "LabelsVisible", true));
 
-		submenu.addSeparator();
+		labelsSubmenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("moveEdgeLabels"), "EdgeLabelsMovable"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("moveVertexLabels"), "VertexLabelsMovable"));
+		labelsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("moveEdgeLabels"), "EdgeLabelsMovable"));
+		labelsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("moveVertexLabels"), "VertexLabelsMovable"));
 
-		submenu.addSeparator();
+		labelsSubmenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("handleReturn"), "EnterStopsCellEditing"));
+		labelsSubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("handleReturn"), "EnterStopsCellEditing"));
 
-		menu.addSeparator();
+		optionMenu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("connections")));
+		connectionsSubmenu = (JMenu) optionMenu.add(new JMenu(mxResources.get("connections")));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("connectable"), "Connectable"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("connectableEdges"), "ConnectableEdges"));
+		connectionsSubmenu.add(new TogglePropertyItem(graphComponent, mxResources.get("connectable"), "Connectable"));
+		connectionsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("connectableEdges"), "ConnectableEdges"));
 
-		submenu.addSeparator();
+		connectionsSubmenu.addSeparator();
 
-		submenu.add(new ToggleCreateTargetItem(editor, mxResources.get("createTarget")));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("disconnectOnMove"), "DisconnectOnMove"));
+		connectionsSubmenu.add(new ToggleCreateTargetItem(editor, mxResources.get("createTarget")));
+		connectionsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("disconnectOnMove"), "DisconnectOnMove"));
 
-		submenu.addSeparator();
+		connectionsSubmenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("connectMode"), new ToggleConnectModeAction()));
+		connectionsSubmenu.add(editor.bind(mxResources.get("connectMode"), new ToggleConnectModeAction()));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("validation")));
+		connectionsSubmenu = (JMenu) optionMenu.add(new JMenu(mxResources.get("validation")));
 
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("allowDanglingEdges"), "AllowDanglingEdges"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("cloneInvalidEdges"), "CloneInvalidEdges"));
+		connectionsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("allowDanglingEdges"), "AllowDanglingEdges"));
+		connectionsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("cloneInvalidEdges"), "CloneInvalidEdges"));
 
-		submenu.addSeparator();
+		connectionsSubmenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("allowLoops"), "AllowLoops"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("multigraph"), "Multigraph"));
+		connectionsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("allowLoops"), "AllowLoops"));
+		connectionsSubmenu.add(new TogglePropertyItem(graph, mxResources.get("multigraph"), "Multigraph"));
 
 		// Creates the window menu
-		menu = add(new JMenu(mxResources.get("window")));
+		windowMenu = add(new JMenu(mxResources.get("window")));
 
 		UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
 
@@ -559,7 +760,7 @@ public class EditorMenuBar extends JMenuBar
 		{
 			final String clazz = lafs[i].getClassName();
 			
-			menu.add(new AbstractAction(lafs[i].getName())
+			windowMenu.add(new AbstractAction(lafs[i].getName())
 			{
 				/**
 				 * 
@@ -574,61 +775,61 @@ public class EditorMenuBar extends JMenuBar
 		}
 
 		// Creates a developer menu
-		menu = add(new JMenu("Generate"));
-		menu.add(editor.bind("Null Graph", new InsertGraph(GraphType.NULL, aGraph)));
-		menu.add(editor.bind("Complete Graph", new InsertGraph(GraphType.COMPLETE, aGraph)));
-		menu.add(editor.bind("Grid", new InsertGraph(GraphType.GRID, aGraph)));
-		menu.add(editor.bind("Bipartite", new InsertGraph(GraphType.BIPARTITE, aGraph)));
-		menu.add(editor.bind("Complete Bipartite", new InsertGraph(GraphType.COMPLETE_BIPARTITE, aGraph)));
-		menu.add(editor.bind("Knight's Graph", new InsertGraph(GraphType.KNIGHT, aGraph)));
-		menu.add(editor.bind("King's Graph", new InsertGraph(GraphType.KING, aGraph)));
-		menu.add(editor.bind("Petersen", new InsertGraph(GraphType.PETERSEN, aGraph)));
-		menu.add(editor.bind("Path", new InsertGraph(GraphType.PATH, aGraph)));
-		menu.add(editor.bind("Star", new InsertGraph(GraphType.STAR, aGraph)));
-		menu.add(editor.bind("Wheel", new InsertGraph(GraphType.WHEEL, aGraph)));
-		menu.add(editor.bind("Friendship Windmill", new InsertGraph(GraphType.FRIENDSHIP_WINDMILL, aGraph)));
-		menu.add(editor.bind("Full Windmill", new InsertGraph(GraphType.FULL_WINDMILL, aGraph)));
-		menu.add(editor.bind("Knight's Tour", new InsertGraph(GraphType.KNIGHT_TOUR, aGraph)));
-		menu.addSeparator();
-		menu.add(editor.bind("Simple Random", new InsertGraph(GraphType.SIMPLE_RANDOM, aGraph)));
-		menu.add(editor.bind("Simple Random Tree", new InsertGraph(GraphType.SIMPLE_RANDOM_TREE, aGraph)));
-		menu.addSeparator();
-		menu.add(editor.bind("Reset Style", new InsertGraph(GraphType.RESET_STYLE, aGraph)));
+		generateMenu = add(new JMenu("Generate"));
+		generateMenu.add(editor.bind("Null Graph", new InsertGraph(GraphType.NULL, aGraph)));
+		generateMenu.add(editor.bind("Complete Graph", new InsertGraph(GraphType.COMPLETE, aGraph)));
+		generateMenu.add(editor.bind("Grid", new InsertGraph(GraphType.GRID, aGraph)));
+		generateMenu.add(editor.bind("Bipartite", new InsertGraph(GraphType.BIPARTITE, aGraph)));
+		generateMenu.add(editor.bind("Complete Bipartite", new InsertGraph(GraphType.COMPLETE_BIPARTITE, aGraph)));
+		generateMenu.add(editor.bind("Knight's Graph", new InsertGraph(GraphType.KNIGHT, aGraph)));
+		generateMenu.add(editor.bind("King's Graph", new InsertGraph(GraphType.KING, aGraph)));
+		generateMenu.add(editor.bind("Petersen", new InsertGraph(GraphType.PETERSEN, aGraph)));
+		generateMenu.add(editor.bind("Path", new InsertGraph(GraphType.PATH, aGraph)));
+		generateMenu.add(editor.bind("Star", new InsertGraph(GraphType.STAR, aGraph)));
+		generateMenu.add(editor.bind("Wheel", new InsertGraph(GraphType.WHEEL, aGraph)));
+		generateMenu.add(editor.bind("Friendship Windmill", new InsertGraph(GraphType.FRIENDSHIP_WINDMILL, aGraph)));
+		generateMenu.add(editor.bind("Full Windmill", new InsertGraph(GraphType.FULL_WINDMILL, aGraph)));
+		generateMenu.add(editor.bind("Knight's Tour", new InsertGraph(GraphType.KNIGHT_TOUR, aGraph)));
+		generateMenu.addSeparator();
+		generateMenu.add(editor.bind("Simple Random", new InsertGraph(GraphType.SIMPLE_RANDOM, aGraph)));
+		generateMenu.add(editor.bind("Simple Random Tree", new InsertGraph(GraphType.SIMPLE_RANDOM_TREE, aGraph)));
+		generateMenu.addSeparator();
+		generateMenu.add(editor.bind("Reset Style", new InsertGraph(GraphType.RESET_STYLE, aGraph)));
 
-		menu = add(new JMenu("Analyze"));
-		menu.add(editor.bind("Is Connected", new AnalyzeGraph(AnalyzeType.IS_CONNECTED, aGraph)));
-		menu.add(editor.bind("Is Simple", new AnalyzeGraph(AnalyzeType.IS_SIMPLE, aGraph)));
-		menu.add(editor.bind("Is Directed Cyclic", new AnalyzeGraph(AnalyzeType.IS_CYCLIC_DIRECTED, aGraph)));
-		menu.add(editor.bind("Is Undirected Cyclic", new AnalyzeGraph(AnalyzeType.IS_CYCLIC_UNDIRECTED, aGraph)));
-		menu.add(editor.bind("BFS Directed", new InsertGraph(GraphType.BFS_DIR, aGraph)));
-		menu.add(editor.bind("BFS Undirected", new InsertGraph(GraphType.BFS_UNDIR, aGraph)));
-		menu.add(editor.bind("DFS Directed", new InsertGraph(GraphType.DFS_DIR, aGraph)));
-		menu.add(editor.bind("DFS Undirected", new InsertGraph(GraphType.DFS_UNDIR, aGraph)));
-		menu.add(editor.bind("Complementary", new AnalyzeGraph(AnalyzeType.COMPLEMENTARY, aGraph)));
-		menu.add(editor.bind("Regularity", new AnalyzeGraph(AnalyzeType.REGULARITY, aGraph)));
-		menu.add(editor.bind("Dijkstra", new InsertGraph(GraphType.DIJKSTRA, aGraph)));
-		menu.add(editor.bind("Bellman-Ford", new InsertGraph(GraphType.BELLMAN_FORD, aGraph)));
-		menu.add(editor.bind("Floyd-Roy-Warshall", new AnalyzeGraph(AnalyzeType.FLOYD_ROY_WARSHALL, aGraph)));
-		menu.add(editor.bind("Get Components", new AnalyzeGraph(AnalyzeType.COMPONENTS, aGraph)));
-		menu.add(editor.bind("Make Connected", new AnalyzeGraph(AnalyzeType.MAKE_CONNECTED, aGraph)));
-		menu.add(editor.bind("Make Simple", new AnalyzeGraph(AnalyzeType.MAKE_SIMPLE, aGraph)));
-		menu.add(editor.bind("Is Tree", new AnalyzeGraph(AnalyzeType.IS_TREE, aGraph)));
-		menu.add(editor.bind("One Spanning Tree", new AnalyzeGraph(AnalyzeType.ONE_SPANNING_TREE, aGraph)));
-		menu.add(editor.bind("Make tree directed", new InsertGraph(GraphType.MAKE_TREE_DIRECTED, aGraph)));
-		menu.add(editor.bind("Is directed", new AnalyzeGraph(AnalyzeType.IS_DIRECTED, aGraph)));
-		menu.add(editor.bind("Indegree", new InsertGraph(GraphType.INDEGREE, aGraph)));
-		menu.add(editor.bind("Outdegree", new InsertGraph(GraphType.OUTDEGREE, aGraph)));
-		menu.add(editor.bind("Is cut vertex", new InsertGraph(GraphType.IS_CUT_VERTEX, aGraph)));
-		menu.add(editor.bind("Get cut vertices", new AnalyzeGraph(AnalyzeType.GET_CUT_VERTEXES, aGraph)));
-		menu.add(editor.bind("Get cut edges", new AnalyzeGraph(AnalyzeType.GET_CUT_EDGES, aGraph)));
-		menu.add(editor.bind("Get sources", new AnalyzeGraph(AnalyzeType.GET_SOURCES, aGraph)));
-		menu.add(editor.bind("Get sinks", new AnalyzeGraph(AnalyzeType.GET_SINKS, aGraph)));
-		menu.add(editor.bind("Is biconnected", new AnalyzeGraph(AnalyzeType.IS_BICONNECTED, aGraph)));
+		analyzeMenu = add(new JMenu("Analyze"));
+		analyzeMenu.add(editor.bind("Is Connected", new AnalyzeGraph(AnalyzeType.IS_CONNECTED, aGraph)));
+		analyzeMenu.add(editor.bind("Is Simple", new AnalyzeGraph(AnalyzeType.IS_SIMPLE, aGraph)));
+		analyzeMenu.add(editor.bind("Is Directed Cyclic", new AnalyzeGraph(AnalyzeType.IS_CYCLIC_DIRECTED, aGraph)));
+		analyzeMenu.add(editor.bind("Is Undirected Cyclic", new AnalyzeGraph(AnalyzeType.IS_CYCLIC_UNDIRECTED, aGraph)));
+		analyzeMenu.add(editor.bind("BFS Directed", new InsertGraph(GraphType.BFS_DIR, aGraph)));
+		analyzeMenu.add(editor.bind("BFS Undirected", new InsertGraph(GraphType.BFS_UNDIR, aGraph)));
+		analyzeMenu.add(editor.bind("DFS Directed", new InsertGraph(GraphType.DFS_DIR, aGraph)));
+		analyzeMenu.add(editor.bind("DFS Undirected", new InsertGraph(GraphType.DFS_UNDIR, aGraph)));
+		analyzeMenu.add(editor.bind("Complementary", new AnalyzeGraph(AnalyzeType.COMPLEMENTARY, aGraph)));
+		analyzeMenu.add(editor.bind("Regularity", new AnalyzeGraph(AnalyzeType.REGULARITY, aGraph)));
+		analyzeMenu.add(editor.bind("Dijkstra", new InsertGraph(GraphType.DIJKSTRA, aGraph)));
+		analyzeMenu.add(editor.bind("Bellman-Ford", new InsertGraph(GraphType.BELLMAN_FORD, aGraph)));
+		analyzeMenu.add(editor.bind("Floyd-Roy-Warshall", new AnalyzeGraph(AnalyzeType.FLOYD_ROY_WARSHALL, aGraph)));
+		analyzeMenu.add(editor.bind("Get Components", new AnalyzeGraph(AnalyzeType.COMPONENTS, aGraph)));
+		analyzeMenu.add(editor.bind("Make Connected", new AnalyzeGraph(AnalyzeType.MAKE_CONNECTED, aGraph)));
+		analyzeMenu.add(editor.bind("Make Simple", new AnalyzeGraph(AnalyzeType.MAKE_SIMPLE, aGraph)));
+		analyzeMenu.add(editor.bind("Is Tree", new AnalyzeGraph(AnalyzeType.IS_TREE, aGraph)));
+		analyzeMenu.add(editor.bind("One Spanning Tree", new AnalyzeGraph(AnalyzeType.ONE_SPANNING_TREE, aGraph)));
+		analyzeMenu.add(editor.bind("Make tree directed", new InsertGraph(GraphType.MAKE_TREE_DIRECTED, aGraph)));
+		analyzeMenu.add(editor.bind("Is directed", new AnalyzeGraph(AnalyzeType.IS_DIRECTED, aGraph)));
+		analyzeMenu.add(editor.bind("Indegree", new InsertGraph(GraphType.INDEGREE, aGraph)));
+		analyzeMenu.add(editor.bind("Outdegree", new InsertGraph(GraphType.OUTDEGREE, aGraph)));
+		analyzeMenu.add(editor.bind("Is cut vertex", new InsertGraph(GraphType.IS_CUT_VERTEX, aGraph)));
+		analyzeMenu.add(editor.bind("Get cut vertices", new AnalyzeGraph(AnalyzeType.GET_CUT_VERTEXES, aGraph)));
+		analyzeMenu.add(editor.bind("Get cut edges", new AnalyzeGraph(AnalyzeType.GET_CUT_EDGES, aGraph)));
+		analyzeMenu.add(editor.bind("Get sources", new AnalyzeGraph(AnalyzeType.GET_SOURCES, aGraph)));
+		analyzeMenu.add(editor.bind("Get sinks", new AnalyzeGraph(AnalyzeType.GET_SINKS, aGraph)));
+		analyzeMenu.add(editor.bind("Is biconnected", new AnalyzeGraph(AnalyzeType.IS_BICONNECTED, aGraph)));
 
 		// Creates the help menu
-		menu = add(new JMenu(mxResources.get("help")));
+		helpMenu = add(new JMenu(mxResources.get("help")));
 
-		item = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
+		JMenuItem item = helpMenu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
 		item.addActionListener(new ActionListener()
 		{
 			/*
@@ -645,8 +846,7 @@ public class EditorMenuBar extends JMenuBar
 	public static void insertFamilyPalette(){
 		familiesPalette = editor.insertPalette("Families");
 		selectedPalette = Palette.FAMILIES.toString();
-		saveAction.paletteTtype = 1; 
-		saveAsAction.paletteTtype = 1;
+		saveAction.paletteTtype = saveAsAction.paletteTtype = openAction.paletteType = Palette.FAMILIES.toNumber(); 
 		
 		familiesPalette
 				.addTemplate(
@@ -674,8 +874,7 @@ public class EditorMenuBar extends JMenuBar
 	public static void insertHomePalette(){
 		homePalette = editor.insertPalette("Home");
 		selectedPalette = Palette.HOME.toString();
-		saveAction.paletteTtype = 2; 
-		saveAsAction.paletteTtype = 2;
+		saveAction.paletteTtype = saveAsAction.paletteTtype = openAction.paletteType = Palette.HOME.toNumber(); 
 		
 		homePalette
 				.addTemplate(
@@ -705,8 +904,7 @@ public class EditorMenuBar extends JMenuBar
 	public static void insertProcessPalette(){
 		processPalette = editor.insertPalette("Process");
 		selectedPalette = Palette.PROCESS.toString();
-		saveAction.paletteTtype = 3; 
-		saveAsAction.paletteTtype = 3;
+		saveAction.paletteTtype = saveAsAction.paletteTtype = openAction.paletteType = Palette.PROCESS.toNumber(); 
 		
 		processPalette
 				.addTemplate(
@@ -741,36 +939,36 @@ public class EditorMenuBar extends JMenuBar
 	 */
 	public static void populateShapeMenu(JMenu menu, BasicGraphEditor editor)
 	{
-		menu.add(editor.bind(mxResources.get("home"), mxGraphActions.getHomeAction(), "/com/mxgraph/examples/swing/images/house.gif"));
+		shape_menu_item_home = menu.add(editor.bind(mxResources.get("home"), mxGraphActions.getHomeAction(), "/com/mxgraph/examples/swing/images/house.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("exitGroup"), mxGraphActions.getExitGroupAction(), "/com/mxgraph/examples/swing/images/up.gif"));
-		menu.add(editor.bind(mxResources.get("enterGroup"), mxGraphActions.getEnterGroupAction(),
+		shape_menu_item_exitGroup = menu.add(editor.bind(mxResources.get("exitGroup"), mxGraphActions.getExitGroupAction(), "/com/mxgraph/examples/swing/images/up.gif"));
+		shape_menu_item_enterGroup = menu.add(editor.bind(mxResources.get("enterGroup"), mxGraphActions.getEnterGroupAction(),
 				"/com/mxgraph/examples/swing/images/down.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("group"), mxGraphActions.getGroupAction(), "/com/mxgraph/examples/swing/images/group.gif"));
-		menu.add(editor.bind(mxResources.get("ungroup"), mxGraphActions.getUngroupAction(),
+		shape_menu_item_group = menu.add(editor.bind(mxResources.get("group"), mxGraphActions.getGroupAction(), "/com/mxgraph/examples/swing/images/group.gif"));
+		shape_menu_item_unGroup = menu.add(editor.bind(mxResources.get("ungroup"), mxGraphActions.getUngroupAction(),
 				"/com/mxgraph/examples/swing/images/ungroup.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("removeFromGroup"), mxGraphActions.getRemoveFromParentAction()));
+		shape_menu_item_removeFromGroup = menu.add(editor.bind(mxResources.get("removeFromGroup"), mxGraphActions.getRemoveFromParentAction()));
 
-		menu.add(editor.bind(mxResources.get("updateGroupBounds"), mxGraphActions.getUpdateGroupBoundsAction()));
+		shape_menu_item_updateGroupBounds = menu.add(editor.bind(mxResources.get("updateGroupBounds"), mxGraphActions.getUpdateGroupBoundsAction()));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("collapse"), mxGraphActions.getCollapseAction(),
+		shape_menu_item_collapse = menu.add(editor.bind(mxResources.get("collapse"), mxGraphActions.getCollapseAction(),
 				"/com/mxgraph/examples/swing/images/collapse.gif"));
-		menu.add(editor.bind(mxResources.get("expand"), mxGraphActions.getExpandAction(), "/com/mxgraph/examples/swing/images/expand.gif"));
+		shape_menu_item_expand = menu.add(editor.bind(mxResources.get("expand"), mxGraphActions.getExpandAction(), "/com/mxgraph/examples/swing/images/expand.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("toBack"), mxGraphActions.getToBackAction(), "/com/mxgraph/examples/swing/images/toback.gif"));
-		menu.add(editor.bind(mxResources.get("toFront"), mxGraphActions.getToFrontAction(),
+		shape_menu_item_toBack = menu.add(editor.bind(mxResources.get("toBack"), mxGraphActions.getToBackAction(), "/com/mxgraph/examples/swing/images/toback.gif"));
+		shape_menu_item_toFront = menu.add(editor.bind(mxResources.get("toFront"), mxGraphActions.getToFrontAction(),
 				"/com/mxgraph/examples/swing/images/tofront.gif"));
 
 		menu.addSeparator();
@@ -795,7 +993,7 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("autosize"), new AutosizeAction()));
+		shape_menu_item_autoSize = menu.add(editor.bind(mxResources.get("autosize"), new AutosizeAction()));
 
 	}
 
@@ -805,208 +1003,348 @@ public class EditorMenuBar extends JMenuBar
 	 */
 	public static void populateFormatMenu(JMenu menu, BasicGraphEditor editor)
 	{
-		JMenu submenu = (JMenu) menu.add(new JMenu(mxResources.get("background")));
+		format_menu_item_background = (JMenu) menu.add(new JMenu(mxResources.get("background")));
 
-		submenu.add(editor.bind(mxResources.get("fillcolor"), new ColorAction("Fillcolor", mxConstants.STYLE_FILLCOLOR),
+		format_background_menu_item_fill_color = format_menu_item_background.add(editor.bind(mxResources.get("fillcolor"), new ColorAction("Fillcolor", mxConstants.STYLE_FILLCOLOR),
 				"/com/mxgraph/examples/swing/images/fillcolor.gif"));
-		submenu.add(editor.bind(mxResources.get("gradient"), new ColorAction("Gradient", mxConstants.STYLE_GRADIENTCOLOR)));
+		format_background_menu_item_gradient = format_menu_item_background.add(editor.bind(mxResources.get("gradient"), new ColorAction("Gradient", mxConstants.STYLE_GRADIENTCOLOR)));
 
-		submenu.addSeparator();
+		format_menu_item_background.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("image"), new PromptValueAction(mxConstants.STYLE_IMAGE, "Image")));
-		submenu.add(editor.bind(mxResources.get("shadow"), new ToggleAction(mxConstants.STYLE_SHADOW)));
+		format_background_menu_item_image = format_menu_item_background.add(editor.bind(mxResources.get("image"), new PromptValueAction(mxConstants.STYLE_IMAGE, "Image")));
+		format_background_menu_item_shadow = format_menu_item_background.add(editor.bind(mxResources.get("shadow"), new ToggleAction(mxConstants.STYLE_SHADOW)));
 
-		submenu.addSeparator();
+		format_menu_item_background.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("opacity"), new PromptValueAction(mxConstants.STYLE_OPACITY, "Opacity (0-100)")));
+		format_background_menu_item_opacity = format_menu_item_background.add(editor.bind(mxResources.get("opacity"), new PromptValueAction(mxConstants.STYLE_OPACITY, "Opacity (0-100)")));
+		
+		format_menu_item_label = (JMenu) menu.add(new JMenu(mxResources.get("label")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("label")));
-
-		submenu.add(editor.bind(mxResources.get("fontcolor"), new ColorAction("Fontcolor", mxConstants.STYLE_FONTCOLOR),
+		format_label_menu_item_font_color = format_menu_item_label.add(editor.bind(mxResources.get("fontcolor"), new ColorAction("Fontcolor", mxConstants.STYLE_FONTCOLOR),
 				"/com/mxgraph/examples/swing/images/fontcolor.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_label.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("labelFill"), new ColorAction("Label Fill", mxConstants.STYLE_LABEL_BACKGROUNDCOLOR)));
-		submenu.add(editor.bind(mxResources.get("labelBorder"), new ColorAction("Label Border", mxConstants.STYLE_LABEL_BORDERCOLOR)));
+		format_label_menu_item_label_fill = format_menu_item_label.add(editor.bind(mxResources.get("labelFill"), new ColorAction("Label Fill", mxConstants.STYLE_LABEL_BACKGROUNDCOLOR)));
+		format_label_menu_item_label_border = format_menu_item_label.add(editor.bind(mxResources.get("labelBorder"), new ColorAction("Label Border", mxConstants.STYLE_LABEL_BORDERCOLOR)));
 
-		submenu.addSeparator();
+		format_menu_item_label.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("rotateLabel"), new ToggleAction(mxConstants.STYLE_HORIZONTAL, true)));
+		format_label_menu_item_rotate_label = format_menu_item_label.add(editor.bind(mxResources.get("rotateLabel"), new ToggleAction(mxConstants.STYLE_HORIZONTAL, true)));
 
-		submenu.add(editor.bind(mxResources.get("textOpacity"), new PromptValueAction(mxConstants.STYLE_TEXT_OPACITY, "Opacity (0-100)")));
+		format_label_menu_item_text_opacity = format_menu_item_label.add(editor.bind(mxResources.get("textOpacity"), new PromptValueAction(mxConstants.STYLE_TEXT_OPACITY, "Opacity (0-100)")));
 
-		submenu.addSeparator();
+		format_menu_item_label.addSeparator();
 
-		JMenu subsubmenu = (JMenu) submenu.add(new JMenu(mxResources.get("position")));
+		format_label_menu_item_position = (JMenu) format_menu_item_label.add(new JMenu(mxResources.get("position")));
 
-		subsubmenu.add(editor.bind(mxResources.get("top"), new SetLabelPositionAction(mxConstants.ALIGN_TOP, mxConstants.ALIGN_BOTTOM)));
-		subsubmenu.add(editor.bind(mxResources.get("middle"),
+		format_label_menu_item_position.add(editor.bind(mxResources.get("top"), new SetLabelPositionAction(mxConstants.ALIGN_TOP, mxConstants.ALIGN_BOTTOM)));
+		format_label_menu_item_position.add(editor.bind(mxResources.get("middle"),
 				new SetLabelPositionAction(mxConstants.ALIGN_MIDDLE, mxConstants.ALIGN_MIDDLE)));
-		subsubmenu.add(editor.bind(mxResources.get("bottom"), new SetLabelPositionAction(mxConstants.ALIGN_BOTTOM, mxConstants.ALIGN_TOP)));
+		format_label_menu_item_position.add(editor.bind(mxResources.get("bottom"), new SetLabelPositionAction(mxConstants.ALIGN_BOTTOM, mxConstants.ALIGN_TOP)));
 
-		subsubmenu.addSeparator();
+		format_label_menu_item_position.addSeparator();
 
-		subsubmenu.add(editor.bind(mxResources.get("left"), new SetLabelPositionAction(mxConstants.ALIGN_LEFT, mxConstants.ALIGN_RIGHT)));
-		subsubmenu.add(editor.bind(mxResources.get("center"),
+		format_label_menu_item_position.add(editor.bind(mxResources.get("left"), new SetLabelPositionAction(mxConstants.ALIGN_LEFT, mxConstants.ALIGN_RIGHT)));
+		format_label_menu_item_position.add(editor.bind(mxResources.get("center"),
 				new SetLabelPositionAction(mxConstants.ALIGN_CENTER, mxConstants.ALIGN_CENTER)));
-		subsubmenu.add(editor.bind(mxResources.get("right"), new SetLabelPositionAction(mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_LEFT)));
+		format_label_menu_item_position.add(editor.bind(mxResources.get("right"), new SetLabelPositionAction(mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_LEFT)));
 
-		submenu.addSeparator();
+		format_menu_item_label.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("wordWrap"), new KeyValueAction(mxConstants.STYLE_WHITE_SPACE, "wrap")));
-		submenu.add(editor.bind(mxResources.get("noWordWrap"), new KeyValueAction(mxConstants.STYLE_WHITE_SPACE, null)));
+		format_label_menu_item_word_wrap = format_menu_item_label.add(editor.bind(mxResources.get("wordWrap"), new KeyValueAction(mxConstants.STYLE_WHITE_SPACE, "wrap")));
+		format_label_menu_item_no_word_wrap = format_menu_item_label.add(editor.bind(mxResources.get("noWordWrap"), new KeyValueAction(mxConstants.STYLE_WHITE_SPACE, null)));
 
-		submenu.addSeparator();
+		format_menu_item_label.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("hide"), new ToggleAction(mxConstants.STYLE_NOLABEL)));
+		format_label_menu_item_hide = format_menu_item_label.add(editor.bind(mxResources.get("hide"), new ToggleAction(mxConstants.STYLE_NOLABEL)));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("line")));
+		format_menu_item_line = (JMenu) menu.add(new JMenu(mxResources.get("line")));
 
-		submenu.add(editor.bind(mxResources.get("linecolor"), new ColorAction("Linecolor", mxConstants.STYLE_STROKECOLOR),
+		format_line_menu_item_line_color = format_menu_item_line.add(editor.bind(mxResources.get("linecolor"), new ColorAction("Linecolor", mxConstants.STYLE_STROKECOLOR),
 				"/com/mxgraph/examples/swing/images/linecolor.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_line.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("orthogonal"), new ToggleAction(mxConstants.STYLE_ORTHOGONAL)));
-		submenu.add(editor.bind(mxResources.get("dashed"), new ToggleAction(mxConstants.STYLE_DASHED)));
+		format_line_menu_item_orthogonal = format_menu_item_line.add(editor.bind(mxResources.get("orthogonal"), new ToggleAction(mxConstants.STYLE_ORTHOGONAL)));
+		format_line_menu_item_dashed = format_menu_item_line.add(editor.bind(mxResources.get("dashed"), new ToggleAction(mxConstants.STYLE_DASHED)));
 
-		submenu.addSeparator();
+		format_menu_item_line.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("linewidth"), new PromptValueAction(mxConstants.STYLE_STROKEWIDTH, "Linewidth")));
+		format_line_menu_item_line_width = format_menu_item_line.add(editor.bind(mxResources.get("linewidth"), new PromptValueAction(mxConstants.STYLE_STROKEWIDTH, "Linewidth")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("connector")));
+		format_menu_item_connector = (JMenu) menu.add(new JMenu(mxResources.get("connector")));
 
-		submenu.add(editor.bind(mxResources.get("straight"), new SetStyleAction("straight"),
+		format_connector_menu_item_straight = format_menu_item_connector.add(editor.bind(mxResources.get("straight"), new SetStyleAction("straight"),
 				"/com/mxgraph/examples/swing/images/straight.gif"));
 
-		submenu.add(editor.bind(mxResources.get("horizontal"), new SetStyleAction(""), "/com/mxgraph/examples/swing/images/connect.gif"));
-		submenu.add(editor.bind(mxResources.get("vertical"), new SetStyleAction("vertical"),
+		format_connector_menu_item_horizontal = format_menu_item_connector.add(editor.bind(mxResources.get("horizontal"), new SetStyleAction(""), "/com/mxgraph/examples/swing/images/connect.gif"));
+		format_connector_menu_item_vertical = format_menu_item_connector.add(editor.bind(mxResources.get("vertical"), new SetStyleAction("vertical"),
 				"/com/mxgraph/examples/swing/images/vertical.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_connector.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("entityRelation"), new SetStyleAction("edgeStyle=mxEdgeStyle.EntityRelation"),
+		format_connector_menu_item_entity_relation = format_menu_item_connector.add(editor.bind(mxResources.get("entityRelation"), new SetStyleAction("edgeStyle=mxEdgeStyle.EntityRelation"),
 				"/com/mxgraph/examples/swing/images/entity.gif"));
-		submenu.add(editor.bind(mxResources.get("arrow"), new SetStyleAction("arrow"), "/com/mxgraph/examples/swing/images/arrow.gif"));
+		format_connector_menu_item_arrow = format_menu_item_connector.add(editor.bind(mxResources.get("arrow"), new SetStyleAction("arrow"), "/com/mxgraph/examples/swing/images/arrow.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_connector.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("plain"), new ToggleAction(mxConstants.STYLE_NOEDGESTYLE)));
+		format_connector_menu_item_plain = format_menu_item_connector.add(editor.bind(mxResources.get("plain"), new ToggleAction(mxConstants.STYLE_NOEDGESTYLE)));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("linestart")));
+		format_menu_item_line_start = (JMenu) menu.add(new JMenu(mxResources.get("linestart")));
 
-		submenu.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_OPEN),
+		format_line_start_menu_item_open = format_menu_item_line_start.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_OPEN),
 				"/com/mxgraph/examples/swing/images/open_start.gif"));
-		submenu.add(editor.bind(mxResources.get("classic"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_CLASSIC),
+		format_line_start_menu_item_classic = format_menu_item_line_start.add(editor.bind(mxResources.get("classic"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_CLASSIC),
 				"/com/mxgraph/examples/swing/images/classic_start.gif"));
-		submenu.add(editor.bind(mxResources.get("block"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_BLOCK),
+		format_line_start_menu_item_block = format_menu_item_line_start.add(editor.bind(mxResources.get("block"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_BLOCK),
 				"/com/mxgraph/examples/swing/images/block_start.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_line_start.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("diamond"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_DIAMOND),
+		format_line_start_menu_item_diamond = format_menu_item_line_start.add(editor.bind(mxResources.get("diamond"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_DIAMOND),
 				"/com/mxgraph/examples/swing/images/diamond_start.gif"));
-		submenu.add(editor.bind(mxResources.get("oval"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_OVAL),
+		format_line_start_menu_item_oval = format_menu_item_line_start.add(editor.bind(mxResources.get("oval"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_OVAL),
 				"/com/mxgraph/examples/swing/images/oval_start.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_line_start.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.NONE)));
-		submenu.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_STARTSIZE, "Linestart Size")));
+		format_line_start_menu_item_none = format_menu_item_line_start.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.NONE)));
+		format_line_start_menu_item_size = format_menu_item_line_start.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_STARTSIZE, "Linestart Size")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("lineend")));
+		format_menu_item_lineed = (JMenu) menu.add(new JMenu(mxResources.get("lineend")));
 
-		submenu.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OPEN),
+		format_linned_menu_item_open = format_menu_item_lineed.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OPEN),
 				"/com/mxgraph/examples/swing/images/open_end.gif"));
-		submenu.add(editor.bind(mxResources.get("classic"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC),
+		format_linned_menu_item_classic = format_menu_item_lineed.add(editor.bind(mxResources.get("classic"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC),
 				"/com/mxgraph/examples/swing/images/classic_end.gif"));
-		submenu.add(editor.bind(mxResources.get("block"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK),
+		format_linned_menu_item_block = format_menu_item_lineed.add(editor.bind(mxResources.get("block"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK),
 				"/com/mxgraph/examples/swing/images/block_end.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_lineed.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("diamond"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_DIAMOND),
+		format_linned_menu_item_diamond = format_menu_item_lineed.add(editor.bind(mxResources.get("diamond"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_DIAMOND),
 				"/com/mxgraph/examples/swing/images/diamond_end.gif"));
-		submenu.add(editor.bind(mxResources.get("oval"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL),
+		format_linned_menu_item_oval = format_menu_item_lineed.add(editor.bind(mxResources.get("oval"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL),
 				"/com/mxgraph/examples/swing/images/oval_end.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_lineed.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.NONE)));
-		submenu.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_ENDSIZE, "Lineend Size")));
+		format_linned_menu_item_none = format_menu_item_lineed.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.NONE)));
+		format_linned_menu_item_size = format_menu_item_lineed.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_ENDSIZE, "Lineend Size")));
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("alignment")));
+		format_menu_item_alignment = (JMenu) menu.add(new JMenu(mxResources.get("alignment")));
 
-		submenu.add(editor.bind(mxResources.get("left"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_LEFT),
+		format_alignment_menu_item_left = format_menu_item_alignment.add(editor.bind(mxResources.get("left"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_LEFT),
 				"/com/mxgraph/examples/swing/images/left.gif"));
-		submenu.add(editor.bind(mxResources.get("center"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_CENTER),
+		format_alignment_menu_item_center = format_menu_item_alignment.add(editor.bind(mxResources.get("center"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_CENTER),
 				"/com/mxgraph/examples/swing/images/center.gif"));
-		submenu.add(editor.bind(mxResources.get("right"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_RIGHT),
+		format_alignment_menu_item_right = format_menu_item_alignment.add(editor.bind(mxResources.get("right"), new KeyValueAction(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_RIGHT),
 				"/com/mxgraph/examples/swing/images/right.gif"));
 
-		submenu.addSeparator();
+		format_menu_item_alignment.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("top"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_TOP),
+		format_alignment_menu_item_top = format_menu_item_alignment.add(editor.bind(mxResources.get("top"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_TOP),
 				"/com/mxgraph/examples/swing/images/top.gif"));
-		submenu.add(editor.bind(mxResources.get("middle"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_MIDDLE),
+		format_alignment_menu_item_middle = format_menu_item_alignment.add(editor.bind(mxResources.get("middle"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_MIDDLE),
 				"/com/mxgraph/examples/swing/images/middle.gif"));
-		submenu.add(editor.bind(mxResources.get("bottom"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_BOTTOM),
+		format_alignment_menu_item_bottom = format_menu_item_alignment.add(editor.bind(mxResources.get("bottom"), new KeyValueAction(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_BOTTOM),
 				"/com/mxgraph/examples/swing/images/bottom.gif"));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("spacing")));
+		format_menu_item_spacing = (JMenu) menu.add(new JMenu(mxResources.get("spacing")));
 
-		submenu.add(editor.bind(mxResources.get("top"), new PromptValueAction(mxConstants.STYLE_SPACING_TOP, "Top Spacing")));
-		submenu.add(editor.bind(mxResources.get("right"), new PromptValueAction(mxConstants.STYLE_SPACING_RIGHT, "Right Spacing")));
-		submenu.add(editor.bind(mxResources.get("bottom"), new PromptValueAction(mxConstants.STYLE_SPACING_BOTTOM, "Bottom Spacing")));
-		submenu.add(editor.bind(mxResources.get("left"), new PromptValueAction(mxConstants.STYLE_SPACING_LEFT, "Left Spacing")));
+		format_spacing_menu_item_top = format_menu_item_spacing.add(editor.bind(mxResources.get("top"), new PromptValueAction(mxConstants.STYLE_SPACING_TOP, "Top Spacing")));
+		format_spacing_menu_item_right = format_menu_item_spacing.add(editor.bind(mxResources.get("right"), new PromptValueAction(mxConstants.STYLE_SPACING_RIGHT, "Right Spacing")));
+		format_spacing_menu_item_bottom = format_menu_item_spacing.add(editor.bind(mxResources.get("bottom"), new PromptValueAction(mxConstants.STYLE_SPACING_BOTTOM, "Bottom Spacing")));
+		format_spacing_menu_item_left = format_menu_item_spacing.add(editor.bind(mxResources.get("left"), new PromptValueAction(mxConstants.STYLE_SPACING_LEFT, "Left Spacing")));
 
-		submenu.addSeparator();
+		format_menu_item_spacing.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("global"), new PromptValueAction(mxConstants.STYLE_SPACING, "Spacing")));
+		format_spacing_menu_item_global = format_menu_item_spacing.add(editor.bind(mxResources.get("global"), new PromptValueAction(mxConstants.STYLE_SPACING, "Spacing")));
 
-		submenu.addSeparator();
+		format_menu_item_spacing.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("sourceSpacing"), new PromptValueAction(mxConstants.STYLE_SOURCE_PERIMETER_SPACING,
+		format_spacing_menu_item_source_spacing = format_menu_item_spacing.add(editor.bind(mxResources.get("sourceSpacing"), new PromptValueAction(mxConstants.STYLE_SOURCE_PERIMETER_SPACING,
 				mxResources.get("sourceSpacing"))));
-		submenu.add(editor.bind(mxResources.get("targetSpacing"), new PromptValueAction(mxConstants.STYLE_TARGET_PERIMETER_SPACING,
+		format_spacing_menu_item_target_spacing = format_menu_item_spacing.add(editor.bind(mxResources.get("targetSpacing"), new PromptValueAction(mxConstants.STYLE_TARGET_PERIMETER_SPACING,
 				mxResources.get("targetSpacing"))));
 
-		submenu.addSeparator();
+		format_menu_item_spacing.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("perimeter"), new PromptValueAction(mxConstants.STYLE_PERIMETER_SPACING,
+		format_spacing_menu_item_perimeter = format_menu_item_spacing.add(editor.bind(mxResources.get("perimeter"), new PromptValueAction(mxConstants.STYLE_PERIMETER_SPACING,
 				"Perimeter Spacing")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("direction")));
+		format_menu_item_direction = (JMenu) menu.add(new JMenu(mxResources.get("direction")));
 
-		submenu.add(editor.bind(mxResources.get("north"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_NORTH)));
-		submenu.add(editor.bind(mxResources.get("east"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_EAST)));
-		submenu.add(editor.bind(mxResources.get("south"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_SOUTH)));
-		submenu.add(editor.bind(mxResources.get("west"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_WEST)));
+	    format_direction_menu_item_north = format_menu_item_direction.add(editor.bind(mxResources.get("north"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_NORTH)));
+	    format_direction_menu_item_east = format_menu_item_direction.add(editor.bind(mxResources.get("east"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_EAST)));
+	    format_direction_menu_item_south = format_menu_item_direction.add(editor.bind(mxResources.get("south"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_SOUTH)));
+	    format_direction_menu_item_west = format_menu_item_direction.add(editor.bind(mxResources.get("west"), new KeyValueAction(mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_WEST)));
 
-		submenu.addSeparator();
+		format_menu_item_direction.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("rotation"), new PromptValueAction(mxConstants.STYLE_ROTATION, "Rotation (0-360)")));
+		format_direction_menu_item_rotation = format_menu_item_direction.add(editor.bind(mxResources.get("rotation"), new PromptValueAction(mxConstants.STYLE_ROTATION, "Rotation (0-360)")));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
+		format_menu_item_rounded = menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
 
-		menu.add(editor.bind(mxResources.get("style"), new StyleAction()));
+		format_menu_item_style = menu.add(editor.bind(mxResources.get("style"), new StyleAction()));
 		/************Changed by  bdlions***************************/
 	}
 
 	/**************Changed by  bdlions********************/
 	public void resetEditorMenu(){
 		fileMenu.setText(mxResources.get("file"));
+		file_menu_item_import.setText(mxResources.get("importStencil"));
+		file_menu_item_new.setText(mxResources.get("new"));
+		file_menu_item_open.setText(mxResources.get("openFile"));
+		file_menu_item_save.setText(mxResources.get("save"));
+		file_menu_item_save_as.setText(mxResources.get("saveAs"));
+		file_menu_item_page_setup.setText(mxResources.get("pageSetup"));
+		file_menu_item_print.setText(mxResources.get("print"));
+		file_menu_item_exit.setText(mxResources.get("exit"));
+		
+		
+		edit_menu_item_copy.setText(mxResources.get("copy"));
+		edit_menu_item_cut.setText(mxResources.get("cut"));
+		edit_menu_item_delete.setText(mxResources.get("delete"));
+		edit_menu_item_paste.setText(mxResources.get("paste"));
+		edit_menu_item_redo.setText(mxResources.get("redo"));
+		edit_menu_item_select_all.setText(mxResources.get("selectAll"));
+		edit_menu_item_select_none.setText(mxResources.get("selectNone"));
+		edit_menu_item_undo.setText(mxResources.get("undo"));
+		edit_menu_item_warning.setText(mxResources.get("warning"));
+		
+		format_background_menu_item_fill_color.setText(mxResources.get("fillcolor"));
+		format_background_menu_item_gradient.setText(mxResources.get("gradient"));
+		format_background_menu_item_image.setText(mxResources.get("image"));
+		format_background_menu_item_shadow.setText(mxResources.get("shadow"));
+		format_background_menu_item_opacity.setText(mxResources.get("opacity"));
+		
+		format_menu_item_label.setText(mxResources.get("label"));
+		format_label_menu_item_font_color.setText(mxResources.get("fontColor"));
+		format_label_menu_item_label_fill.setText(mxResources.get("labelFill"));
+		format_label_menu_item_label_border.setText(mxResources.get("labelBorder"));
+		format_label_menu_item_rotate_label.setText(mxResources.get("rotateLabel"));
+		format_label_menu_item_text_opacity.setText(mxResources.get("textOpacity"));
+		format_label_menu_item_position.setText(mxResources.get("position"));
+		format_label_menu_item_word_wrap.setText(mxResources.get("wordWrap"));
+		format_label_menu_item_no_word_wrap.setText(mxResources.get("wordNoWrap"));
+		format_label_menu_item_hide.setText(mxResources.get("hide"));
+		
+		format_menu_item_line.setText(mxResources.get("line"));
+		format_line_menu_item_line_color.setText(mxResources.get("lineColor"));
+		format_line_menu_item_orthogonal.setText(mxResources.get("orthogonal"));
+		format_line_menu_item_dashed.setText(mxResources.get("dashed"));
+		format_line_menu_item_line_width.setText(mxResources.get("lineWidth"));
+		
+		format_menu_item_connector.setText(mxResources.get("connector"));
+		format_connector_menu_item_straight.setText(mxResources.get("straight"));
+		format_connector_menu_item_horizontal.setText(mxResources.get("horizontal"));
+		format_connector_menu_item_vertical.setText(mxResources.get("vertical"));
+		format_connector_menu_item_entity_relation.setText(mxResources.get("entityRelation"));
+		format_connector_menu_item_arrow.setText(mxResources.get("arrow"));
+		format_connector_menu_item_plain.setText(mxResources.get("plain"));
+		
+		format_menu_item_line_start.setText(mxResources.get("lineStart"));
+		format_line_start_menu_item_open.setText(mxResources.get("open"));
+		format_line_start_menu_item_classic.setText(mxResources.get("classic"));
+		format_line_start_menu_item_block.setText(mxResources.get("block"));
+		format_line_start_menu_item_diamond.setText(mxResources.get("diamond"));
+		format_line_start_menu_item_oval.setText(mxResources.get("oval"));
+		format_line_start_menu_item_none.setText(mxResources.get("none"));
+		format_line_start_menu_item_size.setText(mxResources.get("size"));
+		
+		format_menu_item_lineed.setText(mxResources.get("linned"));
+		format_linned_menu_item_open.setText(mxResources.get("open"));
+		format_linned_menu_item_classic.setText(mxResources.get("classic"));
+		format_linned_menu_item_block.setText(mxResources.get("block"));
+		format_linned_menu_item_diamond.setText(mxResources.get("diamond"));
+		format_linned_menu_item_oval.setText(mxResources.get("oval"));
+		format_linned_menu_item_none.setText(mxResources.get("none"));
+		format_linned_menu_item_size.setText(mxResources.get("size"));
+		
+		format_menu_item_alignment.setText(mxResources.get("alignment"));
+		format_alignment_menu_item_left.setText(mxResources.get("left"));
+		format_alignment_menu_item_center.setText(mxResources.get("center"));
+		format_alignment_menu_item_right.setText(mxResources.get("right"));
+		format_alignment_menu_item_top.setText(mxResources.get("top"));
+		format_alignment_menu_item_middle.setText(mxResources.get("middle"));
+		format_alignment_menu_item_bottom.setText(mxResources.get("bottom"));
+		
+		format_menu_item_spacing.setText(mxResources.get("spacing"));
+		format_spacing_menu_item_top.setText(mxResources.get("top"));
+		format_spacing_menu_item_right.setText(mxResources.get("right"));
+		format_spacing_menu_item_bottom.setText(mxResources.get("bottom"));
+		format_spacing_menu_item_left.setText(mxResources.get("left"));
+		format_spacing_menu_item_global.setText(mxResources.get("global"));
+		format_spacing_menu_item_source_spacing.setText(mxResources.get("sourceSpacing"));
+		format_spacing_menu_item_target_spacing.setText(mxResources.get("targetSpaing"));
+		format_spacing_menu_item_perimeter.setText(mxResources.get("perimeter"));
+		
+		format_menu_item_direction.setText(mxResources.get("direction"));
+		format_direction_menu_item_north.setText(mxResources.get("north"));
+		format_direction_menu_item_east.setText(mxResources.get("east"));
+		format_direction_menu_item_south.setText(mxResources.get("south"));
+		format_direction_menu_item_west.setText(mxResources.get("west"));
+		format_direction_menu_item_rotation.setText(mxResources.get("rotation"));
+		
+		format_menu_item_rounded.setText(mxResources.get("fillcolor"));
+		format_menu_item_style.setText(mxResources.get("fillcolor"));
+		
+		view_menu_item_antialias.setText(mxResources.get("antialias"));
+		view_menu_item_page_layout.setText(mxResources.get("pageLayout"));
+		view_menu_item_actual_size.setText(mxResources.get("actualSize"));
+		view_menu_item_custom.setText(mxResources.get("custom"));
+		view_menu_item_grid.setText(mxResources.get("grid"));
+		view_menu_item_page.setText(mxResources.get("page"));
+		view_menu_item_rulers.setText(mxResources.get("rulers"));
+		view_menu_item_width.setText(mxResources.get("width"));
+		view_menu_item_zoom.setText(mxResources.get("zoom"));
+		view_menu_item_zoomin.setText(mxResources.get("zoomIn"));
+		view_menu_item_zoomout.setText(mxResources.get("zoomOut"));
+		
 		editMenu.setText(mxResources.get("edit"));
 		viewMenu.setText(mxResources.get("view"));
+		formatMenu.setText(mxResources.get("format"));
+		shapeMenu.setText(mxResources.get("shape"));
+		
+		shape_menu_item_exitGroup.setText(mxResources.get("exitGroup"));
+		shape_menu_item_enterGroup.setText(mxResources.get("enterGroup"));
+		shape_menu_item_home.setText(mxResources.get("home"));
+		shape_menu_item_group.setText(mxResources.get("group"));
+		shape_menu_item_unGroup.setText(mxResources.get("unGroup"));
+		shape_menu_item_removeFromGroup.setText(mxResources.get("removeFromGroup"));
+		shape_menu_item_updateGroupBounds.setText(mxResources.get("updateGroupBounds"));
+		shape_menu_item_collapse.setText(mxResources.get("collapse"));
+		shape_menu_item_expand.setText(mxResources.get("expand"));
+		shape_menu_item_toBack.setText(mxResources.get("toBack"));
+		shape_menu_item_toFront.setText(mxResources.get("toFront"));
+		shape_menu_item_autoSize.setText(mxResources.get("autoSize"));
+		
+		diagramMenu.setText(mxResources.get("diagram"));
+		backGroundSubmenu.setText(mxResources.get("background"));
+		layoutSubmenu.setText(mxResources.get("layout"));
+		selectionSubmenu.setText(mxResources.get("selection"));
+		styleSubmenu.setText(mxResources.get("style"));
+		displaySubmenu.setText(mxResources.get("display"));
+		zoomSubmenu.setText(mxResources.get("zoom"));
+		dragAndDropSubmenu.setText(mxResources.get("dragAndDrop"));
+		labelsSubmenu.setText(mxResources.get("label"));
+		connectionsSubmenu.setText(mxResources.get("connections"));
+		windowMenu.setText(mxResources.get("window"));
+		analyzeMenu.setText(mxResources.get("analyze"));
+		generateMenu.setText(mxResources.get("generate"));
+		helpMenu.setText(mxResources.get("help"));
+		
 	}
 	/**************Changed by  bdlions********************/
 

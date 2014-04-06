@@ -632,7 +632,7 @@ public class EditorActions
 
 					/****************Changed by bdlions***********************/
 					// Adds special vector graphics formats and HTML
-					fc.addChoosableFileFilter(new DefaultFileFilter(".mxe",
+					fc.addChoosableFileFilter(new DefaultFileFilter(".mxe"+paletteTtype,
 							"mxGraph Editor " + mxResources.get("file")
 									+ " (.mxe"+paletteTtype+")"));
 					/****************Changed by bdlions***********************/
@@ -748,7 +748,10 @@ public class EditorActions
 								.createHtmlDocument(graph, null, 1, null, null)
 								.getDocumentElement()), filename);
 					}
-					else if (ext.equalsIgnoreCase("mxe")
+					else if (ext.equalsIgnoreCase("mxe") 
+							|| ext.equalsIgnoreCase("mxe1")
+							|| ext.equalsIgnoreCase("mxe2")
+							|| ext.equalsIgnoreCase("mxe2")
 							|| ext.equalsIgnoreCase("xml"))
 					{
 						mxCodec codec = new mxCodec();
@@ -1590,6 +1593,7 @@ public class EditorActions
 		 * 
 		 */
 		protected String lastDir;
+		public int paletteType;
 
 		/**
 		 * 
@@ -1643,7 +1647,7 @@ public class EditorActions
 
 			// Replaces file extension with .mxe
 			String filename = file.getName();
-			filename = filename.substring(0, filename.length() - 4) + ".mxe";
+			filename = filename.substring(0, filename.length() - 4) + ".mxe" + paletteType;
 
 			if (new File(filename).exists()
 					&& JOptionPane.showConfirmDialog(editor,
@@ -1682,8 +1686,8 @@ public class EditorActions
 
 						// Adds file filter for supported file format
 						DefaultFileFilter defaultFilter = new DefaultFileFilter(
-								".mxe", mxResources.get("allSupportedFormats")
-										+ " (.mxe, .png, .vdx)")
+								".mxe" + paletteType, mxResources.get("allSupportedFormats")
+										+ " (.mxe" + paletteType + ", .png, .vdx)")
 						{
 
 							public boolean accept(File file)
@@ -1697,7 +1701,7 @@ public class EditorActions
 						};
 						fc.addChoosableFileFilter(defaultFilter);
 
-						fc.addChoosableFileFilter(new DefaultFileFilter(".mxe",
+						fc.addChoosableFileFilter(new DefaultFileFilter(".mxe" + paletteType,
 								"mxGraph Editor " + mxResources.get("file")
 										+ " (.mxe)"));
 						fc.addChoosableFileFilter(new DefaultFileFilter(".png",

@@ -75,6 +75,7 @@ import com.mxgraph.examples.swing.editor.EditorActions.TogglePropertyItem;
 import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
 import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
 import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
+import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphActions;
@@ -93,7 +94,7 @@ public class EditorMenuBar extends JMenuBar
 	private static final long serialVersionUID = 4060203894740766714L;
 	
 	/************Changed by bdlions***************/
-	private JMenu fileMenu; 
+	private JMenu fileMenu;
 	private JMenu editMenu;
 	private JMenu viewMenu;
 	private JMenu formatMenu;
@@ -115,7 +116,7 @@ public class EditorMenuBar extends JMenuBar
 	private JMenu helpMenu;
 	
 	/*all file menu sub menu*/
-	private JMenuItem file_menu_item_new;
+	private JMenu file_menu_item_new;
 	private JMenuItem file_menu_item_open;
 	private JMenuItem file_menu_item_import;
 	private JMenuItem file_menu_item_save;
@@ -245,13 +246,13 @@ public class EditorMenuBar extends JMenuBar
 	private static EditorPalette familiesPalette;
 	private static EditorPalette homePalette;
 	private static EditorPalette processPalette;
-	private static String selectedPalette;
+	public static String selectedPalette;
 	
 	private static SaveAction saveAction;
 	private static SaveAction saveAsAction;
 	private static OpenAction openAction;
 	
-	private enum Palette {
+	public enum Palette {
 		FAMILIES("Families", 1),
 		HOME("Home", 2),
 		PROCESS("Process", 3)
@@ -297,12 +298,51 @@ public class EditorMenuBar extends JMenuBar
 
 		/************Changed by  bdlions***************************/
 		// Creates the file menu
-		fileMenu = add(new JMenu(mxResources.get("file")));
-
-		file_menu_item_new = new JMenuItem();
-		file_menu_item_new.setAction(editor.bind(mxResources.get("new"), new NewAction(), "/com/mxgraph/examples/swing/images/new.gif"));
-		fileMenu.add(file_menu_item_new);
+		//fileMenu = add(new JMenu(mxResources.get("file")));
+		//file_menu_item_new = new JMenuItem();
+		//file_menu_item_new.setAction(editor.bind(mxResources.get("new"), new NewAction(), "/com/mxgraph/examples/swing/images/new.gif"));
 		
+		fileMenu = add(new JMenu("file"));
+		
+		file_menu_item_new = new JMenu();
+		file_menu_item_new.setAction(editor.bind(mxResources.get("new"), new NewAction(this), "/com/mxgraph/examples/swing/images/new.gif"));
+		
+		// here add sub menu
+		fileMenu.add(file_menu_item_new);
+
+	    JMenuItem type1 = fileMenu.add(new JMenuItem( "Type 1" ));
+	    type1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				clearPalette();
+				insertFamilyPalette();
+			}
+		});
+	    
+	    JMenuItem type2 = fileMenu.add(new JMenuItem( "Type 2" ));
+	    type2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				// TODO Auto-generated method stub
+				clearPalette();
+				insertHomePalette();
+			}
+		});
+		
+	    JMenuItem type3 = fileMenu.add(new JMenuItem( "Type 3" ));
+	    type3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				// TODO Auto-generated method stub
+				clearPalette();
+				insertProcessPalette();
+			}
+		});
+		 
+	    file_menu_item_new.add(type1);
+	    file_menu_item_new.add(type2);
+	    file_menu_item_new.add(type3);
+	    
 		openAction = new OpenAction();
 		
 		file_menu_item_open = new JMenuItem();
@@ -524,40 +564,8 @@ public class EditorMenuBar extends JMenuBar
 			
 		}
 	    
-	    //by default insert familypalette
+	    // for initially load a family pattern
 	    insertFamilyPalette();
-	    
-	    menu = add(new JMenu("Change Type"));
-	    JMenuItem type1 = menu.add(new JMenuItem( "Type 1" ));
-	    type1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg) {
-				// TODO Auto-generated method stub
-				editor.removePalette();
-				insertFamilyPalette();
-			}
-		});
-	    
-	    JMenuItem type2 = menu.add(new JMenuItem( "Type 2" ));
-	    type2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg) {
-				// TODO Auto-generated method stub
-				editor.removePalette();
-				insertHomePalette();
-			}
-		});
-		
-	    JMenuItem type3 = menu.add(new JMenuItem( "Type 3" ));
-	    type3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg) {
-				// TODO Auto-generated method stub
-				editor.removePalette();
-				insertProcessPalette();
-			}
-		});
-		
 	    
 		
 		/******Changed by bdlions*********/
@@ -841,6 +849,29 @@ public class EditorMenuBar extends JMenuBar
 				editor.about();
 			}
 		});
+	}
+	
+	public static void clearPalette(){
+		if (editor != null)
+		{
+			if (!editor.isModified()
+					|| JOptionPane.showConfirmDialog(editor,
+							mxResources.get("loseChanges")) == JOptionPane.YES_OPTION)
+			{
+				mxGraph graph = editor.getGraphComponent().getGraph();
+
+				// Check modified flag and display save dialog
+				mxCell root = new mxCell();
+				root.insert(new mxCell());
+				graph.getModel().setRoot(root);
+
+				editor.setModified(false);
+				editor.setCurrentFile(null);
+				editor.getGraphComponent().zoomAndCenter();
+			}
+		}
+		// TODO Auto-generated method stub
+		editor.removePalette();
 	}
 	
 	public static void insertFamilyPalette(){

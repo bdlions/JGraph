@@ -4,8 +4,10 @@
  */
 package com.mxgraph.examples.swing.editor;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,13 +31,20 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
@@ -50,6 +59,8 @@ import com.mxgraph.analysis.mxGraphAnalysis;
 import com.mxgraph.canvas.mxGraphics2DCanvas;
 import com.mxgraph.canvas.mxICanvas;
 import com.mxgraph.canvas.mxSvgCanvas;
+import com.mxgraph.examples.swing.GraphEditor;
+import com.mxgraph.examples.swing.editor.EditorMenuBar.Palette;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.io.mxGdCodec;
 import com.mxgraph.model.mxCell;
@@ -1428,31 +1439,97 @@ public class EditorActions
 	@SuppressWarnings("serial")
 	public static class NewAction extends AbstractAction
 	{
+		/****************Changed by bdlions***********************/
+		EditorMenuBar editorMenuBar;
+		
+		public NewAction(EditorMenuBar editorMenuBar){
+			this.editorMenuBar = editorMenuBar;
+		}
+		
+		public NewAction(){
+			
+		}
 		/**
 		 * 
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
 			BasicGraphEditor editor = getEditor(e);
-
-			if (editor != null)
-			{
-				if (!editor.isModified()
-						|| JOptionPane.showConfirmDialog(editor,
-								mxResources.get("loseChanges")) == JOptionPane.YES_OPTION)
-				{
-					mxGraph graph = editor.getGraphComponent().getGraph();
-
-					// Check modified flag and display save dialog
-					mxCell root = new mxCell();
-					root.insert(new mxCell());
-					graph.getModel().setRoot(root);
-
-					editor.setModified(false);
-					editor.setCurrentFile(null);
-					editor.getGraphComponent().zoomAndCenter();
+			final JDialog jfrmae = new JDialog();
+			
+			jfrmae.setLayout(new BorderLayout());
+			JPanel buttonGroupPanel = new JPanel();
+			
+			JPanel okCancelPanel = new JPanel();
+			
+			JButton ok = new JButton("ok");
+			JButton cancel = new JButton("cancel");
+			
+			final JRadioButton type1 = new JRadioButton("Type1");
+		    final JRadioButton type2 = new JRadioButton("Type2");
+		    final JRadioButton type3 = new JRadioButton("Type3");
+		     ButtonGroup bG = new ButtonGroup();
+		     bG.add(type1);
+		     bG.add(type2);
+		     bG.add(type3);
+		     
+		     
+		     
+		     jfrmae.setSize(300,150);
+		     //jfrmae.setLayout( new FlowLayout());
+		     buttonGroupPanel.add(type1);
+		     buttonGroupPanel.add(type2);
+		     buttonGroupPanel.add(type3);
+		     
+		     okCancelPanel.add(ok);
+		     okCancelPanel.add(cancel);
+		     
+		     
+		     jfrmae.add(buttonGroupPanel, BorderLayout.NORTH);
+		     jfrmae.add(okCancelPanel, BorderLayout.SOUTH);
+		     
+		     type1.setSelected(editorMenuBar.selectedPalette == Palette.FAMILIES.toString());
+		     type2.setSelected(editorMenuBar.selectedPalette == Palette.HOME.toString());
+		     type3.setSelected(editorMenuBar.selectedPalette == Palette.PROCESS.toString());
+		     ok.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					if(type1.isSelected()){
+						if(editorMenuBar.selectedPalette != Palette.FAMILIES.toString()) {
+							editorMenuBar.clearPalette();
+							editorMenuBar.insertFamilyPalette();
+							jfrmae.setVisible(false);
+						}
+					}else if(type2.isSelected()){
+						if(editorMenuBar.selectedPalette != Palette.HOME.toString()) {
+							editorMenuBar.clearPalette();
+							editorMenuBar.insertHomePalette();
+							jfrmae.setVisible(false);
+						}
+					}else if(type3.isSelected()){
+						if(editorMenuBar.selectedPalette != Palette.PROCESS.toString()) {
+							editorMenuBar.clearPalette();
+							editorMenuBar.insertProcessPalette();
+							jfrmae.setVisible(false);
+						}
+					}
 				}
-			}
+			});
+		     
+		    cancel.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					jfrmae.setVisible(false);
+				}
+			});
+		   
+			jfrmae.setModal(true);
+			jfrmae.setLocationRelativeTo(null);
+		    jfrmae.setVisible(true);
 		}
 	}
 

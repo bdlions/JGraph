@@ -21,6 +21,7 @@ import javax.security.auth.callback.LanguageCallback;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -117,6 +118,7 @@ public class EditorMenuBar extends JMenuBar
 	
 	/*all file menu sub menu*/
 	private JMenu file_menu_item_new;
+	private JMenu file_menu_item_open_new;
 	private JMenuItem file_menu_item_open;
 	private JMenuItem file_menu_item_import;
 	private JMenuItem file_menu_item_save;
@@ -310,7 +312,7 @@ public class EditorMenuBar extends JMenuBar
 		// here add sub menu
 		fileMenu.add(file_menu_item_new);
 
-	    JMenuItem type1 = fileMenu.add(new JMenuItem( "Type 1" ));
+	    JMenuItem type1 = fileMenu.add(new JMenuItem( mxResources.get("Type1") ));
 	    type1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg) {
@@ -319,7 +321,7 @@ public class EditorMenuBar extends JMenuBar
 			}
 		});
 	    
-	    JMenuItem type2 = fileMenu.add(new JMenuItem( "Type 2" ));
+	    JMenuItem type2 = fileMenu.add(new JMenuItem( mxResources.get("Type2") ));
 	    type2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg) {
@@ -329,7 +331,7 @@ public class EditorMenuBar extends JMenuBar
 			}
 		});
 		
-	    JMenuItem type3 = fileMenu.add(new JMenuItem( "Type 3" ));
+	    JMenuItem type3 = fileMenu.add(new JMenuItem( mxResources.get("Type3") ));
 	    type3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg) {
@@ -338,16 +340,58 @@ public class EditorMenuBar extends JMenuBar
 				insertProcessPalette();
 			}
 		});
-		 
+		
+	    
 	    file_menu_item_new.add(type1);
 	    file_menu_item_new.add(type2);
 	    file_menu_item_new.add(type3);
 	    
-		openAction = new OpenAction();
+	    
+		/*openAction = new OpenAction();
 		
 		file_menu_item_open = new JMenuItem();
 		file_menu_item_open.setAction(editor.bind(mxResources.get("openFile"), openAction, "/com/mxgraph/examples/swing/images/open.gif"));
+		fileMenu.add(file_menu_item_open);*/
+	    
+	    openAction = new OpenAction();
+		
+		file_menu_item_open = new JMenu();
+		file_menu_item_open.setAction(editor.bind(mxResources.get("openFile"), openAction, "/com/mxgraph/examples/swing/images/open.gif"));
 		fileMenu.add(file_menu_item_open);
+
+		JMenuItem openType1 = fileMenu.add(new JMenuItem( mxResources.get("Type1") ));
+		openType1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				openAction.paletteType = Palette.FAMILIES.toNumber();
+				openAction.openFile(editor);
+			}
+		});
+		
+		
+		JMenuItem openType2 = fileMenu.add(new JMenuItem( mxResources.get("Type2") ));
+		openType2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				openAction.paletteType = Palette.HOME.toNumber();
+				openAction.openFile(editor);
+			}
+		});
+		
+		JMenuItem openType3 = fileMenu.add(new JMenuItem( mxResources.get("Type3") ));
+		openType3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg) {
+				openAction.paletteType = Palette.PROCESS.toNumber();
+				openAction.openFile(editor);
+			}
+		});
+		
+		file_menu_item_open.add(openType1);
+		file_menu_item_open.add(openType2);
+		file_menu_item_open.add(openType3);
+		
+		
 		
 		file_menu_item_import = new JMenuItem();
 		file_menu_item_import.setAction(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/com/mxgraph/examples/swing/images/open.gif"));
@@ -872,6 +916,10 @@ public class EditorMenuBar extends JMenuBar
 		}
 		// TODO Auto-generated method stub
 		editor.removePalette();
+	}
+	
+	public static void openNewFile() {
+		
 	}
 	
 	public static void insertFamilyPalette(){

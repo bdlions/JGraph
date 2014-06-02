@@ -41,6 +41,7 @@ import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -1462,12 +1463,12 @@ public class EditorActions
 			
 			JPanel okCancelPanel = new JPanel();
 			
-			JButton ok = new JButton("ok");
-			JButton cancel = new JButton("cancel");
+			JButton ok = new JButton(mxResources.get("Ok"));
+			JButton cancel = new JButton(mxResources.get("Cancel"));
 			
-			final JRadioButton type1 = new JRadioButton("Type1");
-		    final JRadioButton type2 = new JRadioButton("Type2");
-		    final JRadioButton type3 = new JRadioButton("Type3");
+			final JRadioButton type1 = new JRadioButton(mxResources.get("Type1"));
+		    final JRadioButton type2 = new JRadioButton(mxResources.get("Type2"));
+		    final JRadioButton type3 = new JRadioButton(mxResources.get("Type3"));
 		     ButtonGroup bG = new ButtonGroup();
 		     bG.add(type1);
 		     bG.add(type2);
@@ -1476,6 +1477,7 @@ public class EditorActions
 		     
 		     
 		     jfrmae.setSize(300,150);
+		     jfrmae.setTitle(mxResources.get("NewFile"));
 		     //jfrmae.setLayout( new FlowLayout());
 		     buttonGroupPanel.add(type1);
 		     buttonGroupPanel.add(type2);
@@ -1497,23 +1499,23 @@ public class EditorActions
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
 					if(type1.isSelected()){
-						if(editorMenuBar.selectedPalette != Palette.FAMILIES.toString()) {
+						//if(editorMenuBar.selectedPalette != Palette.FAMILIES.toString()) {
 							editorMenuBar.clearPalette();
 							editorMenuBar.insertFamilyPalette();
 							jfrmae.setVisible(false);
-						}
+						//}
 					}else if(type2.isSelected()){
-						if(editorMenuBar.selectedPalette != Palette.HOME.toString()) {
+						//if(editorMenuBar.selectedPalette != Palette.HOME.toString()) {
 							editorMenuBar.clearPalette();
 							editorMenuBar.insertHomePalette();
 							jfrmae.setVisible(false);
-						}
+						//}
 					}else if(type3.isSelected()){
-						if(editorMenuBar.selectedPalette != Palette.PROCESS.toString()) {
+						//if(editorMenuBar.selectedPalette != Palette.PROCESS.toString()) {
 							editorMenuBar.clearPalette();
 							editorMenuBar.insertProcessPalette();
 							jfrmae.setVisible(false);
-						}
+						//}
 					}
 				}
 			});
@@ -1523,7 +1525,7 @@ public class EditorActions
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					jfrmae.setVisible(false);
+					jfrmae.dispose();
 				}
 			});
 		   
@@ -1671,7 +1673,19 @@ public class EditorActions
 		 */
 		protected String lastDir;
 		public int paletteType;
-
+		
+		public ActionListener selectedPaletteType;
+		
+		EditorMenuBar editorMenuBar;
+		
+		public OpenAction(EditorMenuBar editorMenuBar){
+			this.editorMenuBar = editorMenuBar;
+		}
+		
+		public OpenAction(){
+			
+		}
+		
 		/**
 		 * 
 		 */
@@ -1739,13 +1753,7 @@ public class EditorActions
 			editor.setCurrentFile(new File(lastDir + "/" + filename));
 		}
 
-		/**
-		 * 
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			BasicGraphEditor editor = getEditor(e);
-
+		public void openFile(BasicGraphEditor editor){
 			if (editor != null)
 			{
 				if (!editor.isModified()
@@ -1780,7 +1788,7 @@ public class EditorActions
 
 						fc.addChoosableFileFilter(new DefaultFileFilter(".mxe" + paletteType,
 								"mxGraph Editor " + mxResources.get("file")
-										+ " (.mxe)"));
+										+ " (.mxe"+paletteType+")"));
 						fc.addChoosableFileFilter(new DefaultFileFilter(".png",
 								"PNG+XML  " + mxResources.get("file")
 										+ " (.png)"));
@@ -1850,7 +1858,87 @@ public class EditorActions
 				}
 			}
 		}
+		/**
+		 * 
+		 */
+		public void actionPerformed(ActionEvent e)
+		{
+			final BasicGraphEditor editor = getEditor(e);
+			final JDialog jfrmae = new JDialog();
+			
+			jfrmae.setLayout(new BorderLayout());
+			JPanel buttonGroupPanel = new JPanel();
+			
+			JPanel okCancelPanel = new JPanel();
+			
+			JButton ok = new JButton(mxResources.get("Ok"));
+			JButton cancel = new JButton(mxResources.get("Cancel"));
+			
+			final JRadioButton type1 = new JRadioButton(mxResources.get("Type1"));
+		    final JRadioButton type2 = new JRadioButton(mxResources.get("Type2"));
+		    final JRadioButton type3 = new JRadioButton(mxResources.get("Type3"));
+		     ButtonGroup bG = new ButtonGroup();
+		     bG.add(type1);
+		     bG.add(type2);
+		     bG.add(type3);
+		     
+		     
+		     jfrmae.setSize(300,150);
+		     jfrmae.setTitle(mxResources.get("OpenFile"));
+		     buttonGroupPanel.add(type1);
+		     buttonGroupPanel.add(type2);
+		     buttonGroupPanel.add(type3);
+		     
+		     okCancelPanel.add(ok);
+		     okCancelPanel.add(cancel);
+		     
+		     
+		     jfrmae.add(buttonGroupPanel, BorderLayout.NORTH);
+		     jfrmae.add(okCancelPanel, BorderLayout.SOUTH);
+		     
+		     type1.setSelected(editorMenuBar.selectedPalette == Palette.FAMILIES.toString());
+		     type2.setSelected(editorMenuBar.selectedPalette == Palette.HOME.toString());
+		     type3.setSelected(editorMenuBar.selectedPalette == Palette.PROCESS.toString());
+
+		     ok.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					if(type1.isSelected()){
+						paletteType = 1;
+						openFile(editor);
+						jfrmae.dispose();
+					}else if(type2.isSelected()){
+						paletteType = 2;
+						openFile(editor);
+						jfrmae.dispose();
+					}else if(type3.isSelected()){
+						paletteType = 3;
+						openFile(editor);
+						jfrmae.dispose();
+					}
+				}
+			});
+		    
+		    cancel.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					jfrmae.dispose();
+				}
+			});
+		   
+			jfrmae.setModal(true);
+			jfrmae.setLocationRelativeTo(null);
+		    jfrmae.setVisible(true);
+			// end
+		}
+		
 	}
+	
+	
 
 	/**
 	 *

@@ -637,7 +637,7 @@ public class EditorActions
 					}
 
 					JFileChooser fc = new JFileChooser(wd);
-
+					
 					// Adds the default file format
 					FileFilter defaultFilter = xmlPngFilter;
 					fc.addChoosableFileFilter(defaultFilter);
@@ -1768,7 +1768,10 @@ public class EditorActions
 								.getProperty("user.dir");
 
 						JFileChooser fc = new JFileChooser(wd);
-
+						/****************Changed by bdlions***********************/
+						//All files will not be displayed while opening a file
+						fc.setAcceptAllFileFilterUsed(false);
+						
 						// Adds file filter for supported file format
 						DefaultFileFilter defaultFilter = new DefaultFileFilter(
 								".mxe" + paletteType, mxResources.get("allSupportedFormats")

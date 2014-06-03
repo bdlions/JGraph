@@ -763,7 +763,7 @@ public class EditorActions
 					else if (ext.equalsIgnoreCase("mxe") 
 							|| ext.equalsIgnoreCase("mxe1")
 							|| ext.equalsIgnoreCase("mxe2")
-							|| ext.equalsIgnoreCase("mxe2")
+							|| ext.equalsIgnoreCase("mxe3")
 							|| ext.equalsIgnoreCase("xml"))
 					{
 						mxCodec codec = new mxCodec();
